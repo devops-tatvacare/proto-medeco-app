@@ -9,6 +9,7 @@
 import React, { useState } from "react";
 import { typographyClasses } from "@/lib/design-tokens";
 import { NotebookDrilldown } from "./NotebookDrilldown";
+import { NotebookCreation } from "./NotebookCreation";
 
 interface Notebook {
   id: string;
@@ -25,6 +26,9 @@ interface NotebooksProps {
 
 export function Notebooks({ }: NotebooksProps) {
   const [selectedNotebook, setSelectedNotebook] = useState<Notebook | null>(null);
+  const [showCreation, setShowCreation] = useState(false);
+  const [searchQuery, setSearchQuery] = useState("");
+  const [selectedFilter, setSelectedFilter] = useState<string | null>(null);
   const [notebooks, setNotebooks] = useState<Notebook[]>([
     {
       id: "1",
@@ -60,34 +64,27 @@ export function Notebooks({ }: NotebooksProps) {
     },
   ]);
 
-  const [showCreateModal, setShowCreateModal] = useState(false);
-  const [newNotebookTitle, setNewNotebookTitle] = useState("");
+  // Filter notebooks based on search and selected filter
+  const filteredNotebooks = notebooks.filter((notebook) => {
+    const matchesSearch = notebook.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      notebook.description?.toLowerCase().includes(searchQuery.toLowerCase());
+    const matchesFilter =
+      selectedFilter === null ||
+      selectedFilter === "all" ||
+      (selectedFilter === "recent" && new Date(notebook.createdAt).getTime() > Date.now() - 7 * 24 * 60 * 60 * 1000) ||
+      (selectedFilter === "popular" && notebook.itemCount > 10);
 
-  const handleCreateNotebook = () => {
-    if (newNotebookTitle.trim()) {
-      const gradients = [
-        "from-blue-400 to-purple-500",
-        "from-pink-400 to-red-500",
-        "from-yellow-400 to-orange-500",
-        "from-green-400 to-teal-500",
-      ];
-      const newNotebook: Notebook = {
-        id: Date.now().toString(),
-        title: newNotebookTitle,
-        description: "",
-        itemCount: 0,
-        createdAt: new Date().toLocaleDateString("en-US", {
-          month: "short",
-          day: "numeric",
-          year: "numeric",
-        }),
-        bgGradient: gradients[notebooks.length % gradients.length],
-      };
-      setNotebooks([newNotebook, ...notebooks]);
-      setNewNotebookTitle("");
-      setShowCreateModal(false);
-    }
-  };
+    return matchesSearch && matchesFilter;
+  });
+
+  // If creation flow is open, show it
+  if (showCreation) {
+    return (
+      <NotebookCreation
+        onBackClick={() => setShowCreation(false)}
+      />
+    );
+  }
 
   // If a notebook is selected, show the drilldown view
   if (selectedNotebook) {
@@ -101,21 +98,80 @@ export function Notebooks({ }: NotebooksProps) {
 
   return (
     <div className="w-full bg-neutral-50 flex flex-col h-full relative">
+      {/* Search and Filter Section */}
+      <div className="sticky top-0 z-30 bg-white border-b border-gray-100">
+        {/* Search Bar */}
+        <div className="px-6 py-4">
+          <div className="relative">
+            <input
+              type="text"
+              placeholder="Search notebooks..."
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+              className="w-full pl-10 pr-4 py-3 bg-white border border-gray-300 rounded-xl text-gray-900 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-purple-600 focus:border-transparent transition-all"
+            />
+            <svg
+              className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+            >
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+            </svg>
+          </div>
+        </div>
+
+        {/* Filter Chips */}
+        <div className="px-6 pb-4 flex gap-2 overflow-x-auto scrollbar-hide">
+          <button
+            onClick={() => setSelectedFilter(null)}
+            className={`flex-shrink-0 px-4 py-2 rounded-full text-sm font-semibold transition-all whitespace-nowrap ${
+              selectedFilter === null
+                ? "bg-purple-600 text-white"
+                : "bg-gray-100 text-gray-700 hover:bg-gray-200"
+            }`}
+          >
+            All
+          </button>
+          <button
+            onClick={() => setSelectedFilter("recent")}
+            className={`flex-shrink-0 px-4 py-2 rounded-full text-sm font-semibold transition-all whitespace-nowrap ${
+              selectedFilter === "recent"
+                ? "bg-purple-600 text-white"
+                : "bg-gray-100 text-gray-700 hover:bg-gray-200"
+            }`}
+          >
+            Recent
+          </button>
+          <button
+            onClick={() => setSelectedFilter("popular")}
+            className={`flex-shrink-0 px-4 py-2 rounded-full text-sm font-semibold transition-all whitespace-nowrap ${
+              selectedFilter === "popular"
+                ? "bg-purple-600 text-white"
+                : "bg-gray-100 text-gray-700 hover:bg-gray-200"
+            }`}
+          >
+            Popular
+          </button>
+        </div>
+      </div>
+
       <div className="flex-1 overflow-y-auto scrollbar-hide w-full flex flex-col">
         <div className="w-full flex flex-col pb-8 px-6 pt-6">
         {/* Title Section */}
-        <div className="mb-8">
+        <div className="mb-6">
           <h1 className={`${typographyClasses.h1} text-gray-900 mb-2`}>
             My Notebooks
           </h1>
           <p className={`${typographyClasses.sh1} text-gray-500`}>
-            {notebooks.length} notebook{notebooks.length !== 1 ? "s" : ""}
+            {filteredNotebooks.length} notebook{filteredNotebooks.length !== 1 ? "s" : ""}
           </p>
         </div>
 
         {/* Notebooks List - Vertical Stack */}
+        {filteredNotebooks.length > 0 ? (
         <div className="space-y-4">
-          {notebooks.map((notebook) => (
+          {filteredNotebooks.map((notebook) => (
             <button
               key={notebook.id}
               onClick={() => setSelectedNotebook(notebook)}
@@ -150,23 +206,25 @@ export function Notebooks({ }: NotebooksProps) {
             </button>
           ))}
         </div>
-
-        {/* Empty State (shown when no notebooks) */}
-        {notebooks.length === 0 && (
+        ) : (
           <div className="flex flex-col items-center justify-center py-16 text-center">
-            <div className="text-5xl mb-4">📓</div>
+            <div className="text-5xl mb-4">🔍</div>
             <p className={`${typographyClasses.h3SemiBold} text-gray-600 mb-2`}>
-              No notebooks yet
+              {notebooks.length === 0 ? "No notebooks yet" : "No matching notebooks"}
             </p>
             <p className={`${typographyClasses.sh1} text-gray-500 mb-6`}>
-              Create your first notebook to start organizing your notes
+              {notebooks.length === 0
+                ? "Create your first notebook to start organizing your notes"
+                : "Try adjusting your search or filters"}
             </p>
-            <button
-              onClick={() => setShowCreateModal(true)}
-              className="px-6 py-3 bg-purple-600 text-white rounded-full font-semibold hover:bg-purple-700 transition-colors"
-            >
-              Create Notebook
-            </button>
+            {notebooks.length === 0 && (
+              <button
+                onClick={() => setShowCreation(true)}
+                className="px-6 py-3 bg-purple-600 text-white rounded-full font-semibold hover:bg-purple-700 transition-colors"
+              >
+                Create Notebook
+              </button>
+            )}
           </div>
         )}
         </div>
@@ -174,90 +232,12 @@ export function Notebooks({ }: NotebooksProps) {
 
       {/* Floating Action Button - Create Notebook */}
       <button
-        onClick={() => setShowCreateModal(true)}
+        onClick={() => setShowCreation(true)}
         className="absolute bottom-8 right-6 w-16 h-16 rounded-full bg-gradient-to-r from-purple-600 to-purple-700 shadow-lg hover:shadow-xl hover:scale-105 active:scale-95 transition-all flex items-center justify-center text-white font-semibold text-2xl z-20 group"
         aria-label="Create new notebook"
       >
         <span className="group-hover:animate-pulse">+</span>
       </button>
-
-      {/* Create Notebook Modal */}
-      {showCreateModal && (
-        <>
-          {/* Backdrop */}
-          <div
-            className="absolute inset-0 bg-black/30 z-40 transition-opacity"
-            onClick={() => setShowCreateModal(false)}
-          />
-
-          {/* Modal Panel */}
-          <div className="absolute inset-x-0 bottom-0 z-50 bg-white rounded-t-3xl shadow-2xl max-h-[80vh] flex flex-col animate-in slide-in-from-bottom-full">
-            {/* Header */}
-            <div className="flex items-center justify-between px-6 py-4 border-b border-gray-100 flex-shrink-0">
-              <h3 className={`${typographyClasses.h3SemiBold} text-gray-900`}>
-                Create Notebook
-              </h3>
-              <button
-                onClick={() => setShowCreateModal(false)}
-                className="flex-shrink-0 w-8 h-8 flex items-center justify-center hover:bg-gray-100 rounded-lg transition-colors"
-                aria-label="Close modal"
-              >
-                <svg
-                  width="24"
-                  height="24"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="currentColor"
-                  strokeWidth="2"
-                >
-                  <path d="M18 6L6 18M6 6l12 12" />
-                </svg>
-              </button>
-            </div>
-
-            {/* Content */}
-            <div className="flex-1 overflow-y-auto scrollbar-hide px-6 py-6">
-              <div className="space-y-4">
-                <div>
-                  <label className={`${typographyClasses.h4SemiBold} text-gray-700 block mb-3`}>
-                    Notebook Title
-                  </label>
-                  <input
-                    type="text"
-                    placeholder="e.g., Ozempic Research"
-                    value={newNotebookTitle}
-                    onChange={(e) => setNewNotebookTitle(e.target.value)}
-                    onKeyPress={(e) => {
-                      if (e.key === "Enter") {
-                        handleCreateNotebook();
-                      }
-                    }}
-                    autoFocus
-                    className="w-full px-4 py-3 bg-white border border-gray-300 rounded-xl text-gray-900 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-purple-600 focus:border-transparent transition-all"
-                  />
-                </div>
-              </div>
-            </div>
-
-            {/* Footer */}
-            <div className="flex-shrink-0 px-6 py-4 border-t border-gray-100 bg-white flex gap-3">
-              <button
-                onClick={() => setShowCreateModal(false)}
-                className="flex-1 px-4 py-3 border border-gray-300 text-gray-700 rounded-xl font-semibold hover:bg-gray-50 transition-colors"
-              >
-                Cancel
-              </button>
-              <button
-                onClick={handleCreateNotebook}
-                disabled={!newNotebookTitle.trim()}
-                className="flex-1 px-4 py-3 bg-purple-600 text-white rounded-xl font-semibold hover:bg-purple-700 disabled:bg-gray-300 transition-colors"
-              >
-                Create
-              </button>
-            </div>
-          </div>
-        </>
-      )}
     </div>
   );
 }

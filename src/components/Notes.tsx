@@ -7,6 +7,7 @@
 "use client";
 
 import React, { useState } from "react";
+import { FileText, MessageCircle, PenTool, Mic, Pin, Headphones, Search, Sparkles, Plus, X, ChevronLeft, ChevronRight } from "lucide-react";
 import { typographyClasses } from "@/lib/design-tokens";
 
 interface Note {
@@ -21,18 +22,41 @@ interface Note {
   audioUrl?: string;
 }
 
+interface Article {
+  id: string;
+  title: string;
+  source: string;
+}
+
 export function Notes() {
   const [searchQuery, setSearchQuery] = useState("");
   const [selectedFilter, setSelectedFilter] = useState<string | null>(null);
   const [showAddModal, setShowAddModal] = useState(false);
   const [showAudioModal, setShowAudioModal] = useState(false);
   const [showFabMenu, setShowFabMenu] = useState(false);
+
+  // Add Note Modal - Step tracking
+  const [addNoteStep, setAddNoteStep] = useState<"content" | "topic" | "article">("content");
   const [newNoteText, setNewNoteText] = useState("");
   const [selectedTopic, setSelectedTopic] = useState<string | null>(null);
+  const [selectedArticle, setSelectedArticle] = useState<string | null>(null);
+
+  // Audio Modal - Step tracking
+  const [audioStep, setAudioStep] = useState<"ready" | "topic" | "article">("ready");
+
   const [topics, setTopics] = useState(["How GLP-1 Works", "Side Effects", "Clinical Results", "Drug Comparisons", "Personal Notes"]);
   const [showNewTopicInput, setShowNewTopicInput] = useState(false);
   const [newTopicName, setNewTopicName] = useState("");
+  const [topicSearchQuery, setTopicSearchQuery] = useState("");
+  const [articleSearchQuery, setArticleSearchQuery] = useState("");
   const [playingAudioId, setPlayingAudioId] = useState<string | null>(null);
+
+  // Sample articles
+  const [articles] = useState<Article[]>([
+    { id: "1", title: "Ozempic: Mechanism and Clinical Use", source: "Ozempic Video" },
+    { id: "2", title: "GLP-1 Receptor Agonists", source: "Clinical Documentation" },
+    { id: "3", title: "Weight Loss Management with Semaglutide", source: "Medical Journal" },
+  ]);
 
   // Sample notes data
   const allNotes: Note[] = [
@@ -43,7 +67,7 @@ export function Notes() {
       source: "Ozempic Video",
       topic: "How GLP-1 Works",
       timestamp: "Nov 8, 2024",
-      icon: "📝",
+      icon: "transcript",
     },
     {
       id: "2",
@@ -52,7 +76,7 @@ export function Notes() {
       source: "AI Chat",
       topic: "Clinical Results",
       timestamp: "Nov 6, 2024",
-      icon: "💬",
+      icon: "chat",
     },
     {
       id: "3",
@@ -61,7 +85,7 @@ export function Notes() {
       source: "Ozempic Video",
       topic: "Side Effects",
       timestamp: "Nov 5, 2024",
-      icon: "📝",
+      icon: "transcript",
     },
     {
       id: "4",
@@ -70,7 +94,7 @@ export function Notes() {
       source: "AI Chat",
       topic: "Drug Comparisons",
       timestamp: "Nov 3, 2024",
-      icon: "💬",
+      icon: "chat",
     },
     {
       id: "5",
@@ -79,7 +103,7 @@ export function Notes() {
       source: "Manual Note",
       topic: "Personal Notes",
       timestamp: "Nov 2, 2024",
-      icon: "✍️",
+      icon: "manual",
     },
     {
       id: "6",
@@ -88,7 +112,7 @@ export function Notes() {
       source: "Ozempic Video",
       topic: "How GLP-1 Works",
       timestamp: "Oct 30, 2024",
-      icon: "📝",
+      icon: "transcript",
     },
     {
       id: "7",
@@ -97,7 +121,7 @@ export function Notes() {
       source: "Audio Clip",
       topic: "Personal Notes",
       timestamp: "Oct 25, 2024",
-      icon: "🎵",
+      icon: "audio",
       duration: "1:23",
       audioUrl: "data:audio/wav;base64,UklGRiYAAABXQVZFZm10IBAAAAABAAEAQB8AAAB9AAACABAAZGF0YQIAAAAAAA==",
     },
@@ -108,7 +132,7 @@ export function Notes() {
       source: "Audio Clip",
       topic: "Side Effects",
       timestamp: "Oct 20, 2024",
-      icon: "🎵",
+      icon: "audio",
       duration: "2:15",
       audioUrl: "data:audio/wav;base64,UklGRiYAAABXQVZFZm10IBAAAAABAAEAQB8AAAB9AAACABAAZGF0YQIAAAAAAA==",
     },
@@ -141,13 +165,15 @@ export function Notes() {
   const getNoteIcon = (type: string) => {
     switch (type) {
       case "transcript":
-        return "📝";
+        return <FileText size={20} className="text-blue-600" />;
       case "chat":
-        return "💬";
+        return <MessageCircle size={20} className="text-purple-600" />;
       case "manual":
-        return "✍️";
+        return <PenTool size={20} className="text-amber-600" />;
+      case "audio":
+        return <Headphones size={20} className="text-green-600" />;
       default:
-        return "📌";
+        return <Pin size={20} className="text-gray-600" />;
     }
   };
 
@@ -156,7 +182,59 @@ export function Notes() {
       // Handle adding note
       setNewNoteText("");
       setSelectedTopic(null);
+      setSelectedArticle(null);
+      setAddNoteStep("content");
       setShowAddModal(false);
+    }
+  };
+
+  const handleProceedAddNote = () => {
+    if (addNoteStep === "content" && newNoteText.trim()) {
+      setAddNoteStep("topic");
+    } else if (addNoteStep === "topic") {
+      setAddNoteStep("article");
+    } else if (addNoteStep === "article") {
+      handleAddNote();
+    }
+  };
+
+  const handleBackAddNote = () => {
+    if (addNoteStep === "topic") {
+      setAddNoteStep("content");
+    } else if (addNoteStep === "article") {
+      setAddNoteStep("topic");
+    }
+  };
+
+  // Filter topics based on search query
+  const filteredTopics = topics.filter((topic) =>
+    topic.toLowerCase().includes(topicSearchQuery.toLowerCase())
+  );
+
+  // Filter articles based on search query
+  const filteredArticles = articles.filter((article) =>
+    article.title.toLowerCase().includes(articleSearchQuery.toLowerCase()) ||
+    article.source.toLowerCase().includes(articleSearchQuery.toLowerCase())
+  );
+
+  const handleProceedAudio = () => {
+    if (audioStep === "ready") {
+      setAudioStep("topic");
+    } else if (audioStep === "topic") {
+      setAudioStep("article");
+    } else if (audioStep === "article") {
+      setSelectedTopic(null);
+      setSelectedArticle(null);
+      setAudioStep("ready");
+      setShowAudioModal(false);
+    }
+  };
+
+  const handleBackAudio = () => {
+    if (audioStep === "topic") {
+      setAudioStep("ready");
+    } else if (audioStep === "article") {
+      setAudioStep("topic");
     }
   };
 
@@ -237,7 +315,7 @@ export function Notes() {
                       <div className="space-y-3">
                         {/* Header with icon and duration */}
                         <div className="flex items-start gap-3">
-                          <span className="text-xl flex-shrink-0 mt-0.5">{getNoteIcon(note.type)}</span>
+                          <div className="flex-shrink-0 mt-1">{getNoteIcon(note.type)}</div>
                           <div className="flex-1 min-w-0">
                             <p className={`${typographyClasses.sh1} text-gray-900 leading-relaxed line-clamp-2 mb-1`}>
                               {note.text}
@@ -305,7 +383,7 @@ export function Notes() {
                     ) : (
                       // Regular Note Card
                       <div className="flex items-start gap-3">
-                        <span className="text-xl flex-shrink-0 mt-0.5">{getNoteIcon(note.type)}</span>
+                        <div className="flex-shrink-0 mt-0.5">{getNoteIcon(note.type)}</div>
                         <div className="flex-1 min-w-0">
                           <p className={`${typographyClasses.sh1} text-gray-900 leading-relaxed line-clamp-2 mb-2`}>
                             {note.text}
@@ -358,67 +436,136 @@ export function Notes() {
             }}
           />
 
-          {/* Modal Panel */}
+          {/* Modal Panel - Add Note */}
           {showAddModal && (
             <div className="absolute inset-x-0 bottom-0 z-50 bg-white rounded-t-3xl shadow-2xl max-h-[80vh] flex flex-col animate-in slide-in-from-bottom-full">
-              {/* Header */}
+              {/* Header with Back Button */}
               <div className="flex items-center justify-between px-6 py-4 border-b border-gray-100 flex-shrink-0">
-                <h3 className={`${typographyClasses.h3SemiBold} text-gray-900`}>
-                  Add Note
+                {addNoteStep !== "content" && (
+                  <button
+                    onClick={handleBackAddNote}
+                    className="w-8 h-8 flex items-center justify-center hover:bg-gray-100 rounded-lg transition-colors"
+                    aria-label="Go back"
+                  >
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                      <path d="M19 12H5M12 19l-7-7 7-7" />
+                    </svg>
+                  </button>
+                )}
+                <h3 className={`${typographyClasses.h3SemiBold} text-gray-900 flex-1 text-center`}>
+                  {addNoteStep === "content" && "What's on your mind?"}
+                  {addNoteStep === "topic" && "Tag to Topic"}
+                  {addNoteStep === "article" && "Link to Article"}
                 </h3>
                 <button
-                  onClick={() => setShowAddModal(false)}
+                  onClick={() => {
+                    setShowAddModal(false);
+                    setAddNoteStep("content");
+                    setNewNoteText("");
+                    setSelectedTopic(null);
+                    setSelectedArticle(null);
+                  }}
                   className="flex-shrink-0 w-8 h-8 flex items-center justify-center hover:bg-gray-100 rounded-lg transition-colors"
                   aria-label="Close modal"
                 >
-                  <svg
-                    width="24"
-                    height="24"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    stroke="currentColor"
-                    strokeWidth="2"
-                  >
+                  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
                     <path d="M18 6L6 18M6 6l12 12" />
                   </svg>
                 </button>
               </div>
 
-              {/* Content */}
-              <div className="flex-1 overflow-y-auto scrollbar-hide px-6 py-6">
-                <div className="space-y-6">
-                  {/* Note Input */}
-                  <div>
-                    <label className={`${typographyClasses.h4SemiBold} text-gray-700 block mb-3`}>
-                      Note
-                    </label>
+              {/* Step Indicator */}
+              <div className="px-6 py-3 flex gap-1">
+                <div className={`h-1 flex-1 rounded-full transition-all ${addNoteStep === "content" || addNoteStep === "topic" || addNoteStep === "article" ? "bg-purple-600" : "bg-gray-200"}`} />
+                <div className={`h-1 flex-1 rounded-full transition-all ${addNoteStep === "topic" || addNoteStep === "article" ? "bg-purple-600" : "bg-gray-200"}`} />
+                <div className={`h-1 flex-1 rounded-full transition-all ${addNoteStep === "article" ? "bg-purple-600" : "bg-gray-200"}`} />
+              </div>
+
+              {/* Content - Step 1: Note Content */}
+              {addNoteStep === "content" && (
+                <div className="flex-1 overflow-y-auto scrollbar-hide px-6 py-6">
+                  <div className="space-y-4">
+                    <p className={`${typographyClasses.sh1} text-gray-600`}>
+                      Write down your thoughts and observations
+                    </p>
                     <textarea
-                      placeholder="Write your note here..."
+                      placeholder="Type your note here..."
                       value={newNoteText}
                       onChange={(e) => setNewNoteText(e.target.value)}
+                      autoFocus
                       className="w-full px-4 py-3 bg-white border border-gray-300 rounded-xl text-gray-900 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-purple-600 focus:border-transparent transition-all resize-none"
-                      rows={4}
+                      rows={6}
                     />
                   </div>
+                </div>
+              )}
 
-                  {/* Topic Selector */}
-                  <div>
-                    <div className="flex items-center justify-between mb-3">
-                      <label className={`${typographyClasses.h4SemiBold} text-gray-700`}>
-                        Tag to Topic
-                      </label>
-                      <button
-                        onClick={() => setShowNewTopicInput(!showNewTopicInput)}
-                        className="text-purple-600 hover:text-purple-700 font-semibold text-sm flex items-center gap-1"
+              {/* Content - Step 2: Topic Selection */}
+              {addNoteStep === "topic" && (
+                <div className="flex-1 overflow-y-auto scrollbar-hide px-6 py-6">
+                  <div className="space-y-4">
+                    <p className={`${typographyClasses.sh1} text-gray-600 mb-4`}>
+                      Which topic does this belong to?
+                    </p>
+
+                    {/* Search Topics */}
+                    <div className="relative mb-4">
+                      <input
+                        type="text"
+                        placeholder="Search topics..."
+                        value={topicSearchQuery}
+                        onChange={(e) => setTopicSearchQuery(e.target.value)}
+                        className="w-full pl-10 pr-4 py-3 bg-white border border-gray-300 rounded-xl text-gray-900 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-purple-600 focus:border-transparent transition-all text-sm"
+                      />
+                      <svg
+                        className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400"
+                        fill="none"
+                        stroke="currentColor"
+                        viewBox="0 0 24 24"
                       >
-                        <span>+</span> New
-                      </button>
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+                      </svg>
                     </div>
 
-                    {/* New Topic Input */}
+                    <div className="space-y-3">
+                      {filteredTopics.length > 0 ? (
+                        filteredTopics.map((topic) => (
+                        <button
+                          key={topic}
+                          onClick={() => setSelectedTopic(selectedTopic === topic ? null : topic)}
+                          className={`w-full p-4 text-left rounded-xl border-2 transition-all ${
+                            selectedTopic === topic
+                              ? "border-purple-600 bg-purple-50"
+                              : "border-gray-200 bg-white hover:border-purple-300"
+                          }`}
+                        >
+                          <p className={`${typographyClasses.sh1} font-semibold ${
+                            selectedTopic === topic ? "text-purple-700" : "text-gray-900"
+                          }`}>
+                            {topic}
+                          </p>
+                        </button>
+                      ))
+                      ) : (
+                        <p className={`${typographyClasses.sh1} text-gray-500 text-center py-4`}>
+                          No topics found
+                        </p>
+                      )}
+                    </div>
+
+                    {/* Create New Topic */}
+                    {!showNewTopicInput && (
+                      <button
+                        onClick={() => setShowNewTopicInput(true)}
+                        className="w-full p-4 border-2 border-dashed border-purple-300 rounded-xl text-purple-600 hover:border-purple-500 hover:bg-purple-50 transition-all font-semibold"
+                      >
+                        + Create New Topic
+                      </button>
+                    )}
+
                     {showNewTopicInput && (
-                      <div className="mb-4 p-3 bg-purple-50 border-2 border-purple-200 rounded-lg">
-                        <div className="flex gap-2 items-center">
+                      <div className="p-4 bg-purple-50 border-2 border-purple-200 rounded-xl">
+                        <div className="flex gap-2">
                           <input
                             type="text"
                             placeholder="Topic name..."
@@ -435,52 +582,103 @@ export function Notes() {
                           <button
                             onClick={handleAddNewTopic}
                             disabled={!newTopicName.trim()}
-                            className="px-3 py-2 bg-purple-600 text-white rounded-lg font-semibold text-sm hover:bg-purple-700 disabled:bg-gray-300 transition-colors"
+                            className="px-4 py-2 bg-purple-600 text-white rounded-lg font-semibold text-sm hover:bg-purple-700 disabled:bg-gray-300 transition-colors"
                           >
                             Add
                           </button>
                         </div>
                       </div>
                     )}
+                  </div>
+                </div>
+              )}
 
-                    {/* Topic List */}
-                    <div className="space-y-2">
-                      {topics.map((topic) => (
+              {/* Content - Step 3: Article Selection */}
+              {addNoteStep === "article" && (
+                <div className="flex-1 overflow-y-auto scrollbar-hide px-6 py-6">
+                  <div className="space-y-4">
+                    <p className={`${typographyClasses.sh1} text-gray-600 mb-4`}>
+                      Link this to an article (optional)
+                    </p>
+
+                    {/* Search Articles */}
+                    <div className="relative mb-4">
+                      <input
+                        type="text"
+                        placeholder="Search articles..."
+                        value={articleSearchQuery}
+                        onChange={(e) => setArticleSearchQuery(e.target.value)}
+                        className="w-full pl-10 pr-4 py-3 bg-white border border-gray-300 rounded-xl text-gray-900 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-purple-600 focus:border-transparent transition-all text-sm"
+                      />
+                      <svg
+                        className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400"
+                        fill="none"
+                        stroke="currentColor"
+                        viewBox="0 0 24 24"
+                      >
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+                      </svg>
+                    </div>
+
+                    <div className="space-y-3">
+                      {filteredArticles.length > 0 ? (
+                        filteredArticles.map((article) => (
                         <button
-                          key={topic}
-                          onClick={() => setSelectedTopic(selectedTopic === topic ? null : topic)}
-                          className={`w-full p-3 text-left rounded-lg border-2 transition-all ${
-                            selectedTopic === topic
+                          key={article.id}
+                          onClick={() => setSelectedArticle(selectedArticle === article.id ? null : article.id)}
+                          className={`w-full p-4 text-left rounded-xl border-2 transition-all ${
+                            selectedArticle === article.id
                               ? "border-purple-600 bg-purple-50"
-                              : "border-gray-200 bg-white hover:border-purple-200"
+                              : "border-gray-200 bg-white hover:border-purple-300"
                           }`}
                         >
                           <p className={`${typographyClasses.sh1} font-semibold ${
-                            selectedTopic === topic ? "text-purple-700" : "text-gray-900"
+                            selectedArticle === article.id ? "text-purple-700" : "text-gray-900"
                           }`}>
-                            {topic}
+                            {article.title}
+                          </p>
+                          <p className={`${typographyClasses.caption2} text-gray-500 mt-1`}>
+                            {article.source}
                           </p>
                         </button>
-                      ))}
+                      ))
+                      ) : (
+                        <p className={`${typographyClasses.sh1} text-gray-500 text-center py-4`}>
+                          No articles found
+                        </p>
+                      )}
                     </div>
+
+                    <button
+                      onClick={() => setSelectedArticle(null)}
+                      className="w-full p-4 border-2 border-dashed border-gray-300 rounded-xl text-gray-600 hover:border-gray-400 hover:bg-gray-50 transition-all font-semibold text-sm"
+                    >
+                      Skip linking article
+                    </button>
                   </div>
                 </div>
-              </div>
+              )}
 
               {/* Footer */}
               <div className="flex-shrink-0 px-6 py-4 border-t border-gray-100 bg-white flex gap-3">
                 <button
-                  onClick={() => setShowAddModal(false)}
+                  onClick={() => {
+                    setShowAddModal(false);
+                    setAddNoteStep("content");
+                    setNewNoteText("");
+                    setSelectedTopic(null);
+                    setSelectedArticle(null);
+                  }}
                   className="flex-1 px-4 py-3 border border-gray-300 text-gray-700 rounded-xl font-semibold hover:bg-gray-50 transition-colors"
                 >
                   Cancel
                 </button>
                 <button
-                  onClick={handleAddNote}
-                  disabled={!newNoteText.trim()}
+                  onClick={handleProceedAddNote}
+                  disabled={addNoteStep === "content" && !newNoteText.trim()}
                   className="flex-1 px-4 py-3 bg-purple-600 text-white rounded-xl font-semibold hover:bg-purple-700 disabled:bg-gray-300 transition-colors"
                 >
-                  Save Note
+                  {addNoteStep === "article" ? "Save Note" : "Next"}
                 </button>
               </div>
             </div>
@@ -489,122 +687,247 @@ export function Notes() {
           {/* Audio Recording Modal */}
           {showAudioModal && (
             <div className="absolute inset-x-0 bottom-0 z-50 bg-white rounded-t-3xl shadow-2xl max-h-[80vh] flex flex-col animate-in slide-in-from-bottom-full">
-              {/* Header */}
+              {/* Header with Back Button */}
               <div className="flex items-center justify-between px-6 py-4 border-b border-gray-100 flex-shrink-0">
-                <h3 className={`${typographyClasses.h3SemiBold} text-gray-900`}>
-                  Record Audio
+                {audioStep !== "ready" && (
+                  <button
+                    onClick={handleBackAudio}
+                    className="w-8 h-8 flex items-center justify-center hover:bg-gray-100 rounded-lg transition-colors"
+                    aria-label="Go back"
+                  >
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                      <path d="M19 12H5M12 19l-7-7 7-7" />
+                    </svg>
+                  </button>
+                )}
+                <h3 className={`${typographyClasses.h3SemiBold} text-gray-900 flex-1 text-center`}>
+                  {audioStep === "ready" && "Record Audio"}
+                  {audioStep === "topic" && "Tag to Topic"}
+                  {audioStep === "article" && "Link to Article"}
                 </h3>
                 <button
-                  onClick={() => setShowAudioModal(false)}
+                  onClick={() => {
+                    setShowAudioModal(false);
+                    setAudioStep("ready");
+                    setSelectedTopic(null);
+                    setSelectedArticle(null);
+                  }}
                   className="flex-shrink-0 w-8 h-8 flex items-center justify-center hover:bg-gray-100 rounded-lg transition-colors"
                   aria-label="Close modal"
                 >
-                  <svg
-                    width="24"
-                    height="24"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    stroke="currentColor"
-                    strokeWidth="2"
-                  >
+                  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
                     <path d="M18 6L6 18M6 6l12 12" />
                   </svg>
                 </button>
               </div>
 
-              {/* Content */}
-              <div className="flex-1 overflow-y-auto scrollbar-hide px-6 py-12 flex flex-col items-center justify-center">
-                <div className="text-6xl mb-6">🎤</div>
-                <p className={`${typographyClasses.h3SemiBold} text-gray-900 text-center mb-2`}>
-                  Ready to Record
-                </p>
-                <p className={`${typographyClasses.sh1} text-gray-600 text-center mb-8`}>
-                  Tap the microphone button to start recording your audio note
-                </p>
+              {/* Step Indicator */}
+              <div className="px-6 py-3 flex gap-1">
+                <div className={`h-1 flex-1 rounded-full transition-all ${audioStep === "ready" || audioStep === "topic" || audioStep === "article" ? "bg-purple-600" : "bg-gray-200"}`} />
+                <div className={`h-1 flex-1 rounded-full transition-all ${audioStep === "topic" || audioStep === "article" ? "bg-purple-600" : "bg-gray-200"}`} />
+                <div className={`h-1 flex-1 rounded-full transition-all ${audioStep === "article" ? "bg-purple-600" : "bg-gray-200"}`} />
+              </div>
 
-                {/* Record Button */}
-                <button className="w-20 h-20 rounded-full bg-red-500 hover:bg-red-600 text-white flex items-center justify-center shadow-lg hover:shadow-xl transition-all mb-8">
-                  <svg width="32" height="32" viewBox="0 0 24 24" fill="currentColor">
-                    <circle cx="12" cy="12" r="8" />
-                  </svg>
-                </button>
+              {/* Step 1: Ready to Record */}
+              {audioStep === "ready" && (
+                <div className="flex-1 overflow-y-auto scrollbar-hide px-6 py-12 flex flex-col items-center justify-center">
+                  <Mic size={80} className="text-purple-600 mb-6" strokeWidth={1.5} />
+                  <p className={`${typographyClasses.h3SemiBold} text-gray-900 text-center mb-2`}>
+                    Ready to Record
+                  </p>
+                  <p className={`${typographyClasses.sh1} text-gray-600 text-center mb-8`}>
+                    Tap the microphone button to start recording
+                  </p>
 
-                {/* Topic Selector */}
-                <div className="w-full">
-                  <div className="flex items-center justify-between mb-3">
-                    <p className={`${typographyClasses.h4SemiBold} text-gray-700 text-center flex-1`}>
-                      Tag to Topic
+                  {/* Record Button */}
+                  <button
+                    onClick={() => setAudioStep("topic")}
+                    className="w-20 h-20 rounded-full bg-red-500 hover:bg-red-600 text-white flex items-center justify-center shadow-lg hover:shadow-xl transition-all"
+                  >
+                    <svg width="32" height="32" viewBox="0 0 24 24" fill="currentColor">
+                      <circle cx="12" cy="12" r="8" />
+                    </svg>
+                  </button>
+                </div>
+              )}
+
+              {/* Step 2: Topic Selection */}
+              {audioStep === "topic" && (
+                <div className="flex-1 overflow-y-auto scrollbar-hide px-6 py-6">
+                  <div className="space-y-4">
+                    <p className={`${typographyClasses.sh1} text-gray-600 mb-4`}>
+                      Which topic should this audio belong to?
                     </p>
-                    <button
-                      onClick={() => setShowNewTopicInput(!showNewTopicInput)}
-                      className="text-purple-600 hover:text-purple-700 font-semibold text-sm flex items-center gap-1"
-                    >
-                      <span>+</span> New
-                    </button>
-                  </div>
 
-                  {/* New Topic Input */}
-                  {showNewTopicInput && (
-                    <div className="mb-4 p-3 bg-purple-50 border-2 border-purple-200 rounded-lg">
-                      <div className="flex gap-2 items-center">
-                        <input
-                          type="text"
-                          placeholder="Topic name..."
-                          value={newTopicName}
-                          onChange={(e) => setNewTopicName(e.target.value)}
-                          onKeyPress={(e) => {
-                            if (e.key === "Enter") {
-                              handleAddNewTopic();
-                            }
-                          }}
-                          autoFocus
-                          className="flex-1 px-3 py-2 bg-white border border-purple-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-600 text-sm text-gray-900 placeholder-gray-500"
-                        />
-                        <button
-                          onClick={handleAddNewTopic}
-                          disabled={!newTopicName.trim()}
-                          className="px-3 py-2 bg-purple-600 text-white rounded-lg font-semibold text-sm hover:bg-purple-700 disabled:bg-gray-300 transition-colors"
-                        >
-                          Add
-                        </button>
-                      </div>
-                    </div>
-                  )}
-
-                  <div className="space-y-2">
-                    {topics.map((topic) => (
-                      <button
-                        key={topic}
-                        onClick={() => setSelectedTopic(selectedTopic === topic ? null : topic)}
-                        className={`w-full p-3 text-left rounded-lg border-2 transition-all ${
-                          selectedTopic === topic
-                            ? "border-purple-600 bg-purple-50"
-                            : "border-gray-200 bg-white hover:border-purple-200"
-                        }`}
+                    {/* Search Topics */}
+                    <div className="relative mb-4">
+                      <input
+                        type="text"
+                        placeholder="Search topics..."
+                        value={topicSearchQuery}
+                        onChange={(e) => setTopicSearchQuery(e.target.value)}
+                        className="w-full pl-10 pr-4 py-3 bg-white border border-gray-300 rounded-xl text-gray-900 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-purple-600 focus:border-transparent transition-all text-sm"
+                      />
+                      <svg
+                        className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400"
+                        fill="none"
+                        stroke="currentColor"
+                        viewBox="0 0 24 24"
                       >
-                        <p className={`${typographyClasses.sh1} font-semibold ${
-                          selectedTopic === topic ? "text-purple-700" : "text-gray-900"
-                        }`}>
-                          {topic}
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+                      </svg>
+                    </div>
+
+                    <div className="space-y-3">
+                      {filteredTopics.length > 0 ? (
+                        filteredTopics.map((topic) => (
+                        <button
+                          key={topic}
+                          onClick={() => setSelectedTopic(selectedTopic === topic ? null : topic)}
+                          className={`w-full p-4 text-left rounded-xl border-2 transition-all ${
+                            selectedTopic === topic
+                              ? "border-purple-600 bg-purple-50"
+                              : "border-gray-200 bg-white hover:border-purple-300"
+                          }`}
+                        >
+                          <p className={`${typographyClasses.sh1} font-semibold ${
+                            selectedTopic === topic ? "text-purple-700" : "text-gray-900"
+                          }`}>
+                            {topic}
+                          </p>
+                        </button>
+                      ))
+                      ) : (
+                        <p className={`${typographyClasses.sh1} text-gray-500 text-center py-4`}>
+                          No topics found
                         </p>
+                      )}
+                    </div>
+
+                    {/* Create New Topic */}
+                    {!showNewTopicInput && (
+                      <button
+                        onClick={() => setShowNewTopicInput(true)}
+                        className="w-full p-4 border-2 border-dashed border-purple-300 rounded-xl text-purple-600 hover:border-purple-500 hover:bg-purple-50 transition-all font-semibold"
+                      >
+                        + Create New Topic
                       </button>
-                    ))}
+                    )}
+
+                    {showNewTopicInput && (
+                      <div className="p-4 bg-purple-50 border-2 border-purple-200 rounded-xl">
+                        <div className="flex gap-2">
+                          <input
+                            type="text"
+                            placeholder="Topic name..."
+                            value={newTopicName}
+                            onChange={(e) => setNewTopicName(e.target.value)}
+                            onKeyPress={(e) => {
+                              if (e.key === "Enter") {
+                                handleAddNewTopic();
+                              }
+                            }}
+                            autoFocus
+                            className="flex-1 px-3 py-2 bg-white border border-purple-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-600 text-sm text-gray-900 placeholder-gray-500"
+                          />
+                          <button
+                            onClick={handleAddNewTopic}
+                            disabled={!newTopicName.trim()}
+                            className="px-4 py-2 bg-purple-600 text-white rounded-lg font-semibold text-sm hover:bg-purple-700 disabled:bg-gray-300 transition-colors"
+                          >
+                            Add
+                          </button>
+                        </div>
+                      </div>
+                    )}
                   </div>
                 </div>
-              </div>
+              )}
+
+              {/* Step 3: Article Selection */}
+              {audioStep === "article" && (
+                <div className="flex-1 overflow-y-auto scrollbar-hide px-6 py-6">
+                  <div className="space-y-4">
+                    <p className={`${typographyClasses.sh1} text-gray-600 mb-4`}>
+                      Link this to an article (optional)
+                    </p>
+
+                    {/* Search Articles */}
+                    <div className="relative mb-4">
+                      <input
+                        type="text"
+                        placeholder="Search articles..."
+                        value={articleSearchQuery}
+                        onChange={(e) => setArticleSearchQuery(e.target.value)}
+                        className="w-full pl-10 pr-4 py-3 bg-white border border-gray-300 rounded-xl text-gray-900 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-purple-600 focus:border-transparent transition-all text-sm"
+                      />
+                      <svg
+                        className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400"
+                        fill="none"
+                        stroke="currentColor"
+                        viewBox="0 0 24 24"
+                      >
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+                      </svg>
+                    </div>
+
+                    <div className="space-y-3">
+                      {filteredArticles.length > 0 ? (
+                        filteredArticles.map((article) => (
+                        <button
+                          key={article.id}
+                          onClick={() => setSelectedArticle(selectedArticle === article.id ? null : article.id)}
+                          className={`w-full p-4 text-left rounded-xl border-2 transition-all ${
+                            selectedArticle === article.id
+                              ? "border-purple-600 bg-purple-50"
+                              : "border-gray-200 bg-white hover:border-purple-300"
+                          }`}
+                        >
+                          <p className={`${typographyClasses.sh1} font-semibold ${
+                            selectedArticle === article.id ? "text-purple-700" : "text-gray-900"
+                          }`}>
+                            {article.title}
+                          </p>
+                          <p className={`${typographyClasses.caption2} text-gray-500 mt-1`}>
+                            {article.source}
+                          </p>
+                        </button>
+                      ))
+                      ) : (
+                        <p className={`${typographyClasses.sh1} text-gray-500 text-center py-4`}>
+                          No articles found
+                        </p>
+                      )}
+                    </div>
+
+                    <button
+                      onClick={() => setSelectedArticle(null)}
+                      className="w-full p-4 border-2 border-dashed border-gray-300 rounded-xl text-gray-600 hover:border-gray-400 hover:bg-gray-50 transition-all font-semibold text-sm"
+                    >
+                      Skip linking article
+                    </button>
+                  </div>
+                </div>
+              )}
 
               {/* Footer */}
               <div className="flex-shrink-0 px-6 py-4 border-t border-gray-100 bg-white flex gap-3">
                 <button
-                  onClick={() => setShowAudioModal(false)}
+                  onClick={() => {
+                    setShowAudioModal(false);
+                    setAudioStep("ready");
+                    setSelectedTopic(null);
+                    setSelectedArticle(null);
+                  }}
                   className="flex-1 px-4 py-3 border border-gray-300 text-gray-700 rounded-xl font-semibold hover:bg-gray-50 transition-colors"
                 >
                   Cancel
                 </button>
                 <button
+                  onClick={handleProceedAudio}
                   className="flex-1 px-4 py-3 bg-purple-600 text-white rounded-xl font-semibold hover:bg-purple-700 transition-colors"
                 >
-                  Save Audio
+                  {audioStep === "article" ? "Save Audio" : "Next"}
                 </button>
               </div>
             </div>
@@ -620,9 +943,9 @@ export function Notes() {
             setShowAddModal(true);
             setShowFabMenu(false);
           }}
-          className="w-full px-6 py-4 text-left hover:bg-gray-50 transition-colors flex items-center gap-3 border-b border-gray-100 whitespace-nowrap"
+          className="w-full px-6 py-4 text-left hover:bg-gray-50 transition-colors flex items-center gap-3 border-b border-gray-100 whitespace-nowrap group"
         >
-          <span className="text-xl">✍️</span>
+          <PenTool size={22} className="text-amber-600 group-hover:scale-110 transition-transform" />
           <span className={`${typographyClasses.sh1} font-semibold text-gray-900`}>Add Note</span>
         </button>
         <button
@@ -630,9 +953,9 @@ export function Notes() {
             setShowAudioModal(true);
             setShowFabMenu(false);
           }}
-          className="w-full px-6 py-4 text-left hover:bg-gray-50 transition-colors flex items-center gap-3 whitespace-nowrap"
+          className="w-full px-6 py-4 text-left hover:bg-gray-50 transition-colors flex items-center gap-3 whitespace-nowrap group"
         >
-          <span className="text-xl">🎤</span>
+          <Mic size={22} className="text-purple-600 group-hover:scale-110 transition-transform" />
           <span className={`${typographyClasses.sh1} font-semibold text-gray-900`}>Record Audio</span>
         </button>
       </div>
