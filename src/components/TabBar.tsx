@@ -18,20 +18,25 @@ const imageAssets = {
 
 interface TabBarProps {
   onTabChange?: (tab: "home" | "discover" | "feed" | "bookmarks") => void;
+  onHomeClick?: () => void;
   activeTab?: "home" | "discover" | "feed" | "bookmarks";
 }
 
-export function TabBar({ onTabChange, activeTab = "discover" }: TabBarProps) {
+export function TabBar({ onTabChange, onHomeClick, activeTab = "discover" }: TabBarProps) {
   const [selected, setSelected] = useState<"home" | "discover" | "feed" | "bookmarks">(activeTab);
 
   const tabs = [
-    { id: "home", label: "Home", icon: imageAssets.arrowUp },
+    { id: "home", label: "Home", isArrowBack: true },
     { id: "discover", label: "Discover", icon: imageAssets.discover },
     { id: "feed", label: "My feed", icon: imageAssets.myFeed },
     { id: "bookmarks", label: "Bookmarks", icon: imageAssets.bookmarks },
   ] as const;
 
   const handleTabClick = (tabId: typeof tabs[number]["id"]) => {
+    if (tabId === "home") {
+      onHomeClick?.();
+      return;
+    }
     setSelected(tabId);
     onTabChange?.(tabId);
   };
@@ -47,13 +52,27 @@ export function TabBar({ onTabChange, activeTab = "discover" }: TabBarProps) {
             aria-label={tab.label}
           >
             <div className="flex items-center justify-center">
-              <img
-                alt={tab.label}
-                src={tab.icon}
-                className={`w-6 h-6 transition-colors duration-200 ${
-                  selected === tab.id ? "opacity-100" : "opacity-70 group-hover:opacity-85"
-                }`}
-              />
+              {"isArrowBack" in tab ? (
+                <svg
+                  width="24"
+                  height="24"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="2"
+                  className="text-gray-600 group-hover:text-gray-700 transition-colors"
+                >
+                  <path d="M15 19l-7-7 7-7" />
+                </svg>
+              ) : (
+                <img
+                  alt={tab.label}
+                  src={tab.icon}
+                  className={`w-6 h-6 transition-colors duration-200 ${
+                    selected === tab.id ? "opacity-100" : "opacity-70 group-hover:opacity-85"
+                  }`}
+                />
+              )}
             </div>
             <p
               className={`font-poppins text-xs leading-4 transition-colors duration-200 whitespace-nowrap ${

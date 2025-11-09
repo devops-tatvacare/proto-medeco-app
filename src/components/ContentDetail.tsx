@@ -35,6 +35,10 @@ export function ContentDetail({ onBackClick }: ContentDetailProps) {
     router.push("/video-drilldown");
   };
 
+  const handleHomeClick = () => {
+    onBackClick?.();
+  };
+
   return (
     <div className="w-full bg-neutral-50 flex flex-col h-full">
       {/* Sticky Header (120px total) */}
@@ -68,17 +72,6 @@ export function ContentDetail({ onBackClick }: ContentDetailProps) {
 
         {/* Header Content Row (66px) */}
         <div className="flex items-center justify-between px-4 py-3 h-[66px] bg-white border-t border-gray-100 gap-3">
-          {/* Back Button */}
-          <button
-            onClick={onBackClick}
-            className="flex-shrink-0 w-8 h-8 flex items-center justify-center hover:bg-gray-100 active:bg-gray-200 rounded-lg transition-colors"
-            aria-label="Go back"
-          >
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-              <path d="M15 19l-7-7 7-7" />
-            </svg>
-          </button>
-
           {/* Logo */}
           <div className="h-[50px] flex-1 flex items-center">
             <img
@@ -328,7 +321,11 @@ export function ContentDetail({ onBackClick }: ContentDetailProps) {
       </div>
 
       {/* Tab Bar - Bottom Navigation */}
-      <TabBar onTabChange={(tab) => console.log("Tab changed:", tab)} activeTab="discover" />
+      <TabBar
+        onHomeClick={handleHomeClick}
+        onTabChange={(tab) => console.log("Tab changed:", tab)}
+        activeTab="discover"
+      />
     </div>
   );
 }
