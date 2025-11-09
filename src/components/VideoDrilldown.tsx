@@ -54,12 +54,12 @@ export function VideoDrilldown({ title, onBackClick }: VideoDrilldownProps) {
     { time: "6:26", text: "Now that Ozempic's notoriety helps Semaglutide go mainstream, it and drugs like it will only become more commonly prescribed for weight management." },
   ];
 
-  // Topics with color indicators and durations
+  // Topics with color indicators and durations - from actual video content
   const topics = [
-    { title: "Types of Brain Tumours", color: "bg-red-400", duration: "1:45" },
-    { title: "Recognizing Symptoms", color: "bg-yellow-300", duration: "2:30" },
-    { title: "Diagnostic Methods", color: "bg-pink-400", duration: "1:28" },
-    { title: "Treatment Options", color: "bg-purple-500", duration: "2:15" },
+    { title: "What is Ozempic and GLP-1", color: "bg-red-400", duration: "2:54" },
+    { title: "How GLP-1 Works in the Body", color: "bg-yellow-300", duration: "1:18" },
+    { title: "Weight Loss & Health Benefits", color: "bg-pink-400", duration: "1:30" },
+    { title: "Clinical Results & Future Drugs", color: "bg-purple-500", duration: "1:51" },
   ];
 
   const handleAddNote = (transcriptIdx: number) => {
@@ -358,6 +358,11 @@ export function VideoDrilldown({ title, onBackClick }: VideoDrilldownProps) {
           isOpen={isChatOpen}
           onClose={() => setIsChatOpen(false)}
           videoTitle={title}
+          onAddNote={(noteText) => {
+            if (!notes.includes(noteText)) {
+              setNotes([...notes, noteText]);
+            }
+          }}
         />
       )}
     </div>

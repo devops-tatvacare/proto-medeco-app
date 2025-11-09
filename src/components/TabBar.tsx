@@ -18,24 +18,38 @@ const imageAssets = {
 };
 
 interface TabBarProps {
-  onTabChange?: (tab: "home" | "discover" | "feed" | "bookmarks") => void;
+  onTabChange?: (tab: "home" | "discover" | "bookmarks" | "feed") => void;
   onHomeClick?: () => void;
-  activeTab?: "home" | "discover" | "feed" | "bookmarks";
+  onBookmarksClick?: () => void;
+  onFeedClick?: () => void;
+  activeTab?: "home" | "discover" | "bookmarks" | "feed";
 }
 
-export function TabBar({ onTabChange, onHomeClick, activeTab = "discover" }: TabBarProps) {
+export function TabBar({ onTabChange, onHomeClick, onBookmarksClick, onFeedClick, activeTab = "discover" }: TabBarProps) {
   const [selected, setSelected] = useState<"home" | "discover" | "feed" | "bookmarks">(activeTab);
+
+  React.useEffect(() => {
+    setSelected(activeTab);
+  }, [activeTab]);
 
   const tabs = [
     { id: "home", label: "Home", isArrowBack: true },
     { id: "discover", label: "Discover", icon: imageAssets.discover },
-    { id: "feed", label: "My feed", icon: imageAssets.myFeed },
-    { id: "bookmarks", label: "Bookmarks", icon: imageAssets.bookmarks },
+    { id: "bookmarks", label: "Notes", icon: imageAssets.bookmarks },
+    { id: "feed", label: "Notebooks", icon: imageAssets.myFeed },
   ] as const;
 
   const handleTabClick = (tabId: typeof tabs[number]["id"]) => {
     if (tabId === "home") {
       onHomeClick?.();
+      return;
+    }
+    if (tabId === "bookmarks") {
+      onBookmarksClick?.();
+      return;
+    }
+    if (tabId === "feed") {
+      onFeedClick?.();
       return;
     }
     setSelected(tabId);

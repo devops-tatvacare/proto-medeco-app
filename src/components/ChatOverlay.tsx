@@ -20,9 +20,10 @@ interface ChatOverlayProps {
   isOpen: boolean;
   onClose: () => void;
   videoTitle: string;
+  onAddNote?: (note: string) => void;
 }
 
-export function ChatOverlay({ isOpen, onClose, videoTitle }: ChatOverlayProps) {
+export function ChatOverlay({ isOpen, onClose, videoTitle, onAddNote }: ChatOverlayProps) {
   const [messages, setMessages] = useState<Message[]>([]);
   const [inputValue, setInputValue] = useState("");
   const [isLoading, setIsLoading] = useState(false);
@@ -30,10 +31,10 @@ export function ChatOverlay({ isOpen, onClose, videoTitle }: ChatOverlayProps) {
   const inputRef = useRef<HTMLInputElement>(null);
 
   const readyPrompts = [
-    "Explain the early warning signs",
-    "What are treatment options?",
-    "How is diagnosis done?",
-    "What should I do next?",
+    "How does semaglutide work in the body?",
+    "What are the side effects of Ozempic?",
+    "Is Ozempic approved for weight loss?",
+    "What's the difference between Ozempic and Wegovy?",
   ];
 
   // Scroll to bottom of messages
@@ -134,7 +135,7 @@ export function ChatOverlay({ isOpen, onClose, videoTitle }: ChatOverlayProps) {
             <div className="flex flex-col items-center justify-center h-full py-8 text-center">
               <span className="text-4xl mb-3">💬</span>
               <p className={`${typographyClasses.sh1} text-gray-600 mb-6`}>
-                Ask me anything about this video
+                Ask me anything about Ozempic and GLP-1 medications
               </p>
 
               {/* Ready Prompts */}
@@ -164,16 +165,29 @@ export function ChatOverlay({ isOpen, onClose, videoTitle }: ChatOverlayProps) {
                     message.sender === "user" ? "justify-end" : "justify-start"
                   }`}
                 >
-                  <div
-                    className={`max-w-xs px-4 py-3 rounded-2xl ${
-                      message.sender === "user"
-                        ? "bg-purple-600 text-white rounded-br-none"
-                        : "bg-gray-100 text-gray-900 rounded-bl-none"
-                    }`}
-                  >
-                    <p className={`${typographyClasses.sh1} leading-relaxed`}>
-                      {message.text}
-                    </p>
+                  <div className="flex flex-col gap-2">
+                    <div
+                      className={`max-w-xs px-4 py-3 rounded-2xl ${
+                        message.sender === "user"
+                          ? "bg-purple-600 text-white rounded-br-none"
+                          : "bg-gray-100 text-gray-900 rounded-bl-none"
+                      }`}
+                    >
+                      <p className={`${typographyClasses.sh1} leading-relaxed`}>
+                        {message.text}
+                      </p>
+                    </div>
+                    {message.sender === "ai" && (
+                      <button
+                        onClick={() => {
+                          const noteText = `[AI: ${videoTitle}] ${message.text}`;
+                          onAddNote?.(noteText);
+                        }}
+                        className="text-xs text-purple-600 font-semibold hover:text-purple-700 self-start pl-2"
+                      >
+                        + Add to Notes
+                      </button>
+                    )}
                   </div>
                 </div>
               ))}
@@ -203,7 +217,7 @@ export function ChatOverlay({ isOpen, onClose, videoTitle }: ChatOverlayProps) {
               value={inputValue}
               onChange={(e) => setInputValue(e.target.value)}
               onKeyPress={handleKeyPress}
-              className="flex-1 px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-purple-600 focus:border-transparent transition-all"
+              className="flex-1 px-4 py-3 bg-white border border-gray-300 rounded-xl text-gray-900 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-purple-600 focus:border-transparent transition-all"
             />
             <button
               onClick={handleSendMessage}

@@ -7,10 +7,12 @@
 
 "use client";
 
-import React from "react";
+import React, { useState } from "react";
 import { useRouter } from "next/navigation";
 import { typographyClasses } from "@/lib/design-tokens";
 import { TabBar } from "./TabBar";
+import { Notebooks } from "./Notebooks";
+import { Notes } from "./Notes";
 
 // Image assets from Figma
 const imageAssets = {
@@ -20,6 +22,7 @@ const imageAssets = {
   statusBarCellular: "http://localhost:3845/assets/ec0ea5ff4c95cacc501ee57c32042320415a40b4.svg",
   settingsIcon: "http://localhost:3845/assets/1b401b5c77bf342c4d0a62756dfc9751b84cd77c.svg",
   heroBanner: "http://localhost:3845/assets/2d9a0650ed65af75a47657269a92892006284519.png",
+  ozempicImage: "/assets/ozempic-hero.jpg",
   card1Image: "http://localhost:3845/assets/b161b711d745f0bb3973517bfe4d26b4a302e38d.png",
   card2Image: "http://localhost:3845/assets/c777e93932b22ce617d2a25ea177aaaa5a9c1937.png",
 };
@@ -30,6 +33,7 @@ interface ContentDetailProps {
 
 export function ContentDetail({ onBackClick }: ContentDetailProps) {
   const router = useRouter();
+  const [activeView, setActiveView] = useState<"discover" | "bookmarks" | "feed">("discover");
 
   const handleHeroClick = () => {
     router.push("/video-drilldown");
@@ -39,9 +43,21 @@ export function ContentDetail({ onBackClick }: ContentDetailProps) {
     onBackClick?.();
   };
 
+  const handleDiscoverClick = () => {
+    setActiveView("discover");
+  };
+
+  const handleBookmarksClick = () => {
+    setActiveView("bookmarks");
+  };
+
+  const handleFeedClick = () => {
+    setActiveView("feed");
+  };
+
   return (
     <div className="w-full bg-neutral-50 flex flex-col h-full">
-      {/* Sticky Header (120px total) */}
+      {/* Status Bar - Always shown */}
       <div className="sticky top-0 z-50 w-full bg-white shadow-[0px_2px_18px_0px_rgba(0,0,0,0.08)]">
         {/* Status Bar Row (54px) */}
         <div className="flex items-center justify-between px-4 py-3 h-[54px] bg-white">
@@ -70,7 +86,8 @@ export function ContentDetail({ onBackClick }: ContentDetailProps) {
           </div>
         </div>
 
-        {/* Header Content Row (66px) */}
+        {/* Header Content Row - Only shown for Discover view */}
+        {activeView === "discover" && (
         <div className="flex items-center justify-between px-4 py-3 h-[66px] bg-white border-t border-gray-100 gap-3">
           {/* Logo */}
           <div className="h-[50px] flex-1 flex items-center">
@@ -86,21 +103,26 @@ export function ContentDetail({ onBackClick }: ContentDetailProps) {
             <img alt="settings" src={imageAssets.settingsIcon} className="w-full h-full" />
           </div>
         </div>
+        )}
       </div>
 
       {/* Scrollable Content Area */}
       <div className="flex-1 overflow-y-auto scrollbar-hide w-full">
+        {activeView === "discover" && (
         <div className="flex flex-col gap-6 pb-8 px-6 pt-6">
           {/* Hero Section with Image */}
           <button
             onClick={handleHeroClick}
-            className="relative h-72 w-full overflow-hidden rounded-bl-2xl rounded-br-2xl bg-gradient-to-b from-black/40 to-black/70 hover:shadow-lg transition-shadow active:opacity-95 cursor-pointer group"
+            className="relative h-72 w-full overflow-hidden rounded-bl-2xl rounded-br-2xl bg-gradient-to-br from-pink-400 via-pink-300 to-pink-500 hover:shadow-lg transition-shadow active:opacity-95 cursor-pointer group"
             aria-label="View video details"
           >
             <img
-              src={imageAssets.heroBanner}
-              alt="Content hero"
+              src={imageAssets.ozempicImage}
+              alt="Ozempic medication"
               className="absolute inset-0 w-full h-full object-cover"
+              onError={(e) => {
+                (e.target as HTMLImageElement).style.display = 'none';
+              }}
             />
 
             {/* Gradient Overlay */}
@@ -110,16 +132,16 @@ export function ContentDetail({ onBackClick }: ContentDetailProps) {
             <div className="absolute bottom-0 left-0 right-0 p-6 flex flex-col gap-3 text-white">
               {/* Category Tag */}
               <div className="w-fit">
-                <div className="bg-yellow-100 rounded-full px-3 py-1 inline-block">
-                  <span className="text-xs font-semibold text-yellow-900">
-                    ORTHOPAEDIC
+                <div className="bg-blue-100 rounded-full px-3 py-1 inline-block">
+                  <span className="text-xs font-semibold text-blue-900">
+                    ENDOCRINOLOGY
                   </span>
                 </div>
               </div>
 
               {/* Title */}
               <h2 className="text-lg font-semibold leading-tight">
-                Understanding the types of serious brain tumour and its symptoms
+                Ozempic is a game-changer. Here's how it works.
               </h2>
 
               {/* Carousel Indicator */}
@@ -318,13 +340,28 @@ export function ContentDetail({ onBackClick }: ContentDetailProps) {
             </div>
           </div>
         </div>
+        )}
+
+        {activeView === "bookmarks" && (
+          <Notes />
+        )}
+
+        {activeView === "feed" && (
+          <Notebooks />
+        )}
       </div>
 
       {/* Tab Bar - Bottom Navigation */}
       <TabBar
         onHomeClick={handleHomeClick}
-        onTabChange={(tab) => console.log("Tab changed:", tab)}
-        activeTab="discover"
+        onBookmarksClick={handleBookmarksClick}
+        onFeedClick={handleFeedClick}
+        onTabChange={(tab) => {
+          if (tab === "discover") {
+            handleDiscoverClick();
+          }
+        }}
+        activeTab={activeView}
       />
     </div>
   );
