@@ -1,83 +1,195 @@
-## Dr.Tatva HCP App - Home Page A1
+# Dr.Tatva HCP App
 
-This is a fully functional Next.js 16 + React 19 + TypeScript prototype of the Dr.Tatva Healthcare Professional platform, implementing the **"Home page A1"** design from Figma with **actual localhost image assets** from the Figma MCP server.
+A fully functional **Next.js 16 + React 19 + TypeScript** prototype of the Dr.Tatva Healthcare Professional platform. This is a mobile-first healthcare professional app with service offerings, AI integration, and content management features.
 
-### ✅ Key Features
-
-- **Real Figma Assets**: All images are served from `http://localhost:3845/assets/` via the Figma MCP server in LOCAL SERVER mode
-- **Complete Component Library**: StatusBar, RemoteCareBanner, ServiceCard, RewardCard, AskTatvaCard, and Button components
-- **Design System**: Extracted design tokens (colors, typography, spacing) from Figma
-- **Production Ready**: TypeScript strict mode, fully typed components, successful build
+## 🚀 Quick Start
 
 ### Prerequisites
+- Node.js 18.18+ and npm
+- Figma MCP server running locally (optional, for Figma assets)
 
-- Node.js 18.18+ (Next.js 16 requirement)
-- npm (bundled with Node) or another package manager
-- A locally running Figma MCP server (see the [official repo](https://github.com/modelcontextprotocol/servers))
-
-### 1. Install dependencies
+### Setup
 
 ```bash
+# Install dependencies
 npm install
-```
 
-### 2. Configure environment variables
-
-Copy the example file and point it at your MCP server URL.
-
-```bash
+# Configure environment (optional)
 cp .env.local.example .env.local
-# edit the file if your MCP server uses a different port
-```
 
-Environment variables:
-
-| Name                         | Description                                                            |
-| ---------------------------- | ---------------------------------------------------------------------- |
-| `FIGMA_MCP_SERVER_URL`       | Base URL to the MCP server (used on the server/proxy).                 |
-| `NEXT_PUBLIC_FIGMA_MCP_SERVER_URL` | Optional: used in the UI if you want to display the target URL to users. |
-
-### 3. Run the local servers
-
-Start the MCP server first, then boot the Next.js dev server:
-
-```bash
-# in the figma-mcp-server repo
-npm run dev # or the script that starts your MCP server
-
-# inside this repo
+# Start the app
 npm run dev
 ```
 
-Visit [http://localhost:3000](http://localhost:3000) to use the dashboard and send test requests through the proxy.
+Visit **[http://localhost:3000](http://localhost:3000)**
 
-### Using the MCP proxy
+### Available Scripts
+- `npm run dev` – Start dev server
+- `npm run build` – Create optimized build
+- `npm run start` – Run production server
+- `npm run lint` – Run ESLint
 
-The proxy lives under `http://localhost:3000/api/mcp/*`. Any request hitting this path will be forwarded to your MCP server with the remaining path appended.
+---
 
-Example health-check request (assuming your MCP server exposes `/health`):
+## 📁 Project Structure
 
+```
+src/
+├── app/                           # Next.js App Router
+│   ├── page.tsx                   # Home page with services & rewards
+│   ├── content/page.tsx           # Content vault detail page
+│   ├── video-drilldown/page.tsx  # Video player page
+│   ├── layout.tsx                 # Root layout with fonts
+│   └── globals.css                # Global styles + Tailwind + fonts
+│
+├── components/
+│   ├── StatusBar.tsx              # Header with time & user greeting
+│   ├── RemoteCareBanner.tsx       # Hero banner
+│   ├── ServiceCard.tsx            # Service grid cards
+│   ├── RewardCard.tsx             # Reward/incentive cards
+│   ├── AskTatvaCard.tsx           # AI assistant showcase
+│   ├── TabBar.tsx                 # Bottom navigation (4 tabs)
+│   ├── Button.tsx                 # Primary/secondary buttons
+│   ├── ContentDetail.tsx          # Content vault with TabBar
+│   ├── ChatOverlay.tsx            # Chat interface
+│   └── mcp-status-checker.tsx     # MCP connection status
+│
+├── lib/
+│   ├── design-tokens.ts           # Colors, typography, spacing
+│   └── mock-data.ts               # Sample data for components
+│
+├── hooks/
+│   └── useFigmaDesign.ts          # Figma integration hook
+│
+└── types/
+    └── figma.ts                   # TypeScript interfaces
+```
+
+---
+
+## 🎨 Design System
+
+**Tech Stack:**
+- Tailwind CSS 4 (utility-first styling)
+- Next.js 16 (App Router)
+- React 19 (latest)
+- TypeScript 5 (strict mode)
+- Figma MCP for design tokens
+
+**Design Tokens:** (`src/lib/design-tokens.ts`)
+- **Colors:** Primary (#4B4AD5), text colors, grays
+- **Typography:** Poppins (headings) + Manrope (body)
+- **Spacing:** 8px base unit (4px, 8px, 16px, 24px, 32px, 48px)
+
+**Device Specs:**
+- Mobile width: 390px
+- TabBar height: 77px
+- iOS-style notch included
+
+---
+
+## 🏗️ Architecture Overview
+
+### Key Components
+
+**StatusBar** - Displays time, system status, user greeting
+**ServiceGrid** - 4-card grid for main services
+**RewardCard** - Large card variants for incentives
+**AskTatvaCard** - AI feature showcase
+**TabBar** - Bottom navigation with 4 tabs (Home, Discover, Feed, Bookmarks)
+
+### Navigation Flow
+```
+Home (/)
+  ├── Content button → /content (Content Vault)
+  ├── Video → /video-drilldown (Video Player)
+  └── TabBar → Switch between tabs
+```
+
+### Styling Patterns
+1. Use design-tokens from `src/lib/design-tokens.ts`
+2. Apply Tailwind utility classes for responsive design
+3. Use `typographyClasses` for consistent typography
+4. Mobile-first approach (390px base width)
+
+---
+
+## 🔗 Figma MCP Integration
+
+The app includes an MCP proxy at `/api/mcp/*` for Figma integration.
+
+**Environment Variables:**
+```
+FIGMA_MCP_SERVER_URL=http://localhost:3845
+NEXT_PUBLIC_FIGMA_MCP_SERVER_URL=http://localhost:3845 (optional)
+```
+
+**Test the proxy:**
 ```bash
 curl http://localhost:3000/api/mcp/health
 ```
 
-POST requests are also supported; they are forwarded with the original body and headers (minus hop-by-hop headers):
+---
 
-```bash
-curl -X POST http://localhost:3000/api/mcp/messages \
-  -H "Content-Type: application/json" \
-  -d '{"prompt":"Ping from Next.js"}'
-```
+## 📊 Current Status
 
-### Available scripts
+✅ **Completed:**
+- Home page (A1 design) fully implemented
+- All core components (StatusBar, Cards, TabBar, etc.)
+- Design system with tokens
+- TypeScript strict mode
+- Mobile frame with iOS styling
+- Navigation routing
+- Mock data integration
 
-- `npm run dev` – start the Next.js dev server locally.
-- `npm run build` – create an optimized production build.
-- `npm run start` – run the production server (after `npm run build`).
-- `npm run lint` – run ESLint on the codebase.
+🔄 **In Development:**
+- Backend API integration
+- Real data sources
+- Advanced features
 
-### Next steps
+---
 
-- Add UI that talks to the `/api/mcp` proxy (see `src/components/mcp-status-checker.tsx` for an example).
-- If you expose new MCP endpoints, you only need to update the Figma server—no Next.js changes unless you add custom auth/headers.
-- When ready to deploy, set the same environment variables on your hosting platform and ensure the MCP server is reachable from that environment.
+## 🛠️ Common Tasks
+
+### Add a New Component
+1. Create file in `src/components/YourComponent.tsx`
+2. Import design tokens: `import { designTokens, typographyClasses } from "@/lib/design-tokens"`
+3. Use Tailwind classes with design tokens
+4. Export from component file
+
+### Modify Colors/Typography
+Edit `src/lib/design-tokens.ts` - all design tokens are centralized here.
+
+### Add a New Page
+Create a new folder in `src/app/[page-name]/page.tsx` with the App Router pattern.
+
+### Update TabBar
+Modify `src/components/TabBar.tsx` and integrate in the component using it (e.g., ContentDetail).
+
+---
+
+## 📝 Notes
+
+- **Design Tokens:** Extracted from Figma, centralized in one file for easy updates
+- **Mobile-First:** All layouts designed for 390px viewport
+- **Type Safety:** Full TypeScript with strict mode enabled
+- **No CSS Modules:** Pure Tailwind utility classes for consistency
+
+---
+
+## 📦 Tech Stack Summary
+
+| Layer | Tech |
+|-------|------|
+| Framework | Next.js 16 + React 19 |
+| Language | TypeScript 5 |
+| Styling | Tailwind CSS 4 |
+| Fonts | Poppins, Manrope (Google Fonts) |
+| Icons | Lucide React |
+| Animations | Framer Motion |
+| Design System | Figma MCP |
+
+---
+
+**Last Updated:** November 10, 2025
+**Status:** Active Development
