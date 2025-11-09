@@ -30,7 +30,7 @@ export default function VideoDrilldownPage() {
             {/* Scrollable Content */}
             <div className="flex-1 overflow-y-auto scrollbar-hide">
               <VideoDrilldown
-                title="Understanding the types of serious brain tumour and its symptoms"
+                title="Ozempic is a game-changer. Here's how it works."
                 onBackClick={handleBackClick}
               />
             </div>
