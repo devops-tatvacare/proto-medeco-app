@@ -1,0 +1,10 @@
+<svg preserveAspectRatio="none" width="100%" height="100%" overflow="visible" style="display: block;" viewBox="0 0 181 83" fill="none" xmlns="http://www.w3.org/2000/svg">
+<g id="Circles">
+<path id="Ornament 2" d="M7.55954 30.1881C13.4294 25.406 22.0646 26.2879 26.8467 32.1577C31.6287 38.0276 30.7469 46.6628 24.877 51.4448C19.0071 56.2269 10.3719 55.345 5.58988 49.4752C0.807855 43.6053 1.68971 34.9701 7.55954 30.1881Z" stroke="var(--stroke-0, #A1AAFF)" stroke-opacity="0.1" stroke-width="5.01781"/>
+<circle id="Ornament 4" cx="39.569" cy="69.291" r="8.0941" transform="rotate(-39.169 39.569 69.291)" stroke="var(--stroke-0, #A1AAFF)" stroke-opacity="0.1" stroke-width="2"/>
+<circle id="Ornament 3" cx="55.9566" cy="45.4512" r="6.06273" transform="rotate(-39.169 55.9566 45.4512)" fill="var(--fill-0, #A1AAFF)" fill-opacity="0.1"/>
+<circle id="Ornament 4_2" cx="13.7941" cy="13.7941" r="12.7941" transform="matrix(-0.775286 -0.63161 -0.63161 0.775286 147.175 50.9727)" stroke="var(--stroke-0, #A1AAFF)" stroke-opacity="0.1" stroke-width="2"/>
+<circle id="Ornament 3_2" cx="9.19607" cy="9.19607" r="9.19607" transform="matrix(-0.775286 -0.63161 -0.63161 0.775286 162.976 24.6172)" fill="var(--fill-0, #A1AAFF)" fill-opacity="0.1"/>
+<circle id="Ornament 9" cx="13.7941" cy="13.7941" r="11.3449" transform="matrix(-0.775286 -0.63161 -0.63161 0.775286 186.441 66.6992)" stroke="var(--stroke-0, #A1AAFF)" stroke-opacity="0.1" stroke-width="4.8984"/>
+</g>
+</svg>

@@ -9,12 +9,12 @@
 
 import React, { useState } from "react";
 
-// Image assets from Figma - exact URLs from Figma MCP server
+// Image assets downloaded from Figma - now local to project
 const imageAssets = {
-  arrowUp: "http://localhost:3845/assets/0365a5d0c99f5aeaf60c2a6907a9c79e822025c4.svg",
-  discover: "http://localhost:3845/assets/417062a3ee2545ea5bc28b9237085ddddf818fd0.svg",
-  myFeed: "http://localhost:3845/assets/14e9e91c8a7741c4e2e2a5687487ef376947e7e8.svg",
-  bookmarks: "http://localhost:3845/assets/cb8b829558ea79a0160fe1c70b5e089239bb0e8b.svg",
+  arrowUp: "/assets/0365a5d0c99f5aeaf60c2a6907a9c79e822025c4.svg",
+  discover: "/assets/417062a3ee2545ea5bc28b9237085ddddf818fd0.svg",
+  myFeed: "/assets/14e9e91c8a7741c4e2e2a5687487ef376947e7e8.svg",
+  bookmarks: "/assets/cb8b829558ea79a0160fe1c70b5e089239bb0e8b.svg",
 };
 
 interface TabBarProps {

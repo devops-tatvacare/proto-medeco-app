@@ -110,7 +110,7 @@ export function StatusBar({
           <div className="w-10 h-10 bg-gray-200 rounded-full flex items-center justify-center overflow-hidden">
             <div className="opacity-80 w-6 h-6">
               <img
-                src="http://localhost:3845/assets/ba30676c4284e98ed0c95b8fb7dd29295432ff79.svg"
+                src="/assets/ba30676c4284e98ed0c95b8fb7dd29295432ff79.svg"
                 alt="User profile"
                 className="w-full h-full object-contain"
               />

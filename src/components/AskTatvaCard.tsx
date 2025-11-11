@@ -83,7 +83,7 @@ export function AskTatvaCard({ onCtaClick }: AskTatvaCardProps) {
               {/* Background animation SVGs */}
               <div className="absolute inset-0 opacity-30">
                 <img
-                  src="http://localhost:3845/assets/1e80272072e7c908b22fa11768f034ebaa17000e.svg"
+                  src="/assets/1e80272072e7c908b22fa11768f034ebaa17000e.svg"
                   alt=""
                   className="w-full h-full object-cover"
                 />
@@ -92,7 +92,7 @@ export function AskTatvaCard({ onCtaClick }: AskTatvaCardProps) {
               {/* AI Icon in center */}
               <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[42px] h-[42px]">
                 <img
-                  src="http://localhost:3845/assets/1c70c7e91d92c0853499c42f0349f492b1387b36.svg"
+                  src="/assets/1c70c7e91d92c0853499c42f0349f492b1387b36.svg"
                   alt="AI Symbol"
                   className="w-full h-full object-contain"
                 />
@@ -108,11 +108,11 @@ export function AskTatvaCard({ onCtaClick }: AskTatvaCardProps) {
               Powered By
             </span>
             <img
-              src="http://localhost:3845/assets/a8fa60265e57108e280ffdd541c573d65605ca69.png"
+              src="/assets/a8fa60265e57108e280ffdd541c573d65605ca69.png"
               alt="MyTatva"
               className="h-[18.273px] mb-1"
               style={{
-                maskImage: "url(http://localhost:3845/assets/a8fa60265e57108e280ffdd541c573d65605ca69.png)",
+                maskImage: "url(/assets/a8fa60265e57108e280ffdd541c573d65605ca69.png)",
                 maskSize: "contain",
                 backgroundColor: "#9076f4"
               }}
@@ -125,7 +125,7 @@ export function AskTatvaCard({ onCtaClick }: AskTatvaCardProps) {
           {/* Mascot with actual image */}
           <div className="w-[148px] h-[94px] relative">
             <img
-              src="http://localhost:3845/assets/d5e182ccf5d25ffcccb1d5c046d31e28213ae67b.png"
+              src="/assets/d5e182ccf5d25ffcccb1d5c046d31e28213ae67b.png"
               alt="Mascot"
               className="absolute inset-0 w-full h-full object-contain"
             />

@@ -10,22 +10,10 @@
 import React, { useState } from "react";
 import { useRouter } from "next/navigation";
 import { typographyClasses } from "@/lib/design-tokens";
+import { imageAssets } from "@/lib/assets";
 import { TabBar } from "./TabBar";
 import { Notebooks } from "./Notebooks";
 import { Notes } from "./Notes";
-
-// Image assets from Figma
-const imageAssets = {
-  tatvashotsLogo: "http://localhost:3845/assets/f2b54445247db8f8300dc69638a0ab70b2c26312.png",
-  statusBarBattery: "http://localhost:3845/assets/e4868acc8a0c614eaeac54b83706c99d62389ea4.svg",
-  statusBarWifi: "http://localhost:3845/assets/00ef7896ae5b5d01884ef59b3a0f16f84b2946ef.svg",
-  statusBarCellular: "http://localhost:3845/assets/ec0ea5ff4c95cacc501ee57c32042320415a40b4.svg",
-  settingsIcon: "http://localhost:3845/assets/1b401b5c77bf342c4d0a62756dfc9751b84cd77c.svg",
-  heroBanner: "http://localhost:3845/assets/2d9a0650ed65af75a47657269a92892006284519.png",
-  ozempicImage: "/assets/ozempic-hero.jpg",
-  card1Image: "http://localhost:3845/assets/b161b711d745f0bb3973517bfe4d26b4a302e38d.png",
-  card2Image: "http://localhost:3845/assets/c777e93932b22ce617d2a25ea177aaaa5a9c1937.png",
-};
 
 interface ContentDetailProps {
   onBackClick?: () => void;
@@ -70,12 +58,12 @@ export function ContentDetail({ onBackClick }: ContentDetailProps) {
           <div className="flex items-center gap-1">
             {/* Cellular */}
             <div className="w-[19.2px] h-[10.41px] flex items-center justify-center">
-              <img alt="cellular" src={imageAssets.statusBarCellular} className="w-full h-full" />
+              <img alt="cellular" src={imageAssets.statusBar.cellular} className="w-full h-full" />
             </div>
 
             {/* WiFi */}
             <div className="w-[17.142px] h-[10.23px] flex items-center justify-center">
-              <img alt="wifi" src={imageAssets.statusBarWifi} className="w-full h-full" />
+              <img alt="wifi" src={imageAssets.statusBar.wifi} className="w-full h-full" />
             </div>
 
             {/* Battery */}
@@ -100,7 +88,7 @@ export function ContentDetail({ onBackClick }: ContentDetailProps) {
 
           {/* Settings Icon */}
           <div className="flex-shrink-0 w-8 h-8 flex items-center justify-center">
-            <img alt="settings" src={imageAssets.settingsIcon} className="w-full h-full" />
+            <img alt="settings" src={imageAssets.navigation.settings} className="w-full h-full" />
           </div>
         </div>
         )}
@@ -117,7 +105,7 @@ export function ContentDetail({ onBackClick }: ContentDetailProps) {
             aria-label="View video details"
           >
             <img
-              src={imageAssets.ozempicImage}
+              src={imageAssets.content.ozempicHero}
               alt="Ozempic medication"
               className="absolute inset-0 w-full h-full object-cover"
               onError={(e) => {

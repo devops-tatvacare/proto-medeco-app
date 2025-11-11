@@ -13,7 +13,7 @@ export const mockServices = [
       "div",
       { className: "w-[62px] h-[62px] flex items-center justify-center" },
       React.createElement("img", {
-        src: "http://localhost:3845/assets/875eed473dc5007247b3d5c7ea7fd77f7974eaa9.png",
+        src: "/assets/875eed473dc5007247b3d5c7ea7fd77f7974eaa9.png",
         alt: "Generate DDx",
         className: "w-full h-full object-contain transform rotate-180 scale-y-[-1]",
       })
@@ -27,7 +27,7 @@ export const mockServices = [
       "div",
       { className: "w-16 h-16 rounded-2xl flex items-center justify-center overflow-hidden" },
       React.createElement("img", {
-        src: "http://localhost:3845/assets/6a60bb1fb584b4f4b9dc5f0493a040cb3daa7844.png",
+        src: "/assets/6a60bb1fb584b4f4b9dc5f0493a040cb3daa7844.png",
         alt: "TatvaShots",
         className: "w-full h-full object-cover",
       })
@@ -41,7 +41,7 @@ export const mockServices = [
       "div",
       { className: "w-16 h-16 rounded-2xl flex items-center justify-center overflow-hidden" },
       React.createElement("img", {
-        src: "http://localhost:3845/assets/d5e182ccf5d25ffcccb1d5c046d31e28213ae67b.png",
+        src: "/assets/d5e182ccf5d25ffcccb1d5c046d31e28213ae67b.png",
         alt: "Tatva AI",
         className: "w-full h-full object-cover",
       })
@@ -55,7 +55,7 @@ export const mockServices = [
       "div",
       { className: "w-16 h-16 rounded-2xl flex items-center justify-center overflow-hidden" },
       React.createElement("img", {
-        src: "http://localhost:3845/assets/f261b47381c5b61d61e2d3a8624259376455cd2a.png",
+        src: "/assets/f261b47381c5b61d61e2d3a8624259376455cd2a.png",
         alt: "Remote Care",
         className: "w-full h-full object-cover",
       })
@@ -69,7 +69,7 @@ export const mockServices = [
       "div",
       { className: "w-16 h-16 rounded-2xl flex items-center justify-center overflow-hidden" },
       React.createElement("img", {
-        src: "http://localhost:3845/assets/6a60bb1fb584b4f4b9dc5f0493a040cb3daa7844.png",
+        src: "/assets/6a60bb1fb584b4f4b9dc5f0493a040cb3daa7844.png",
         alt: "Content",
         className: "w-full h-full object-cover",
       })
@@ -90,7 +90,7 @@ export const mockRewardCards = [
       "div",
       { className: "w-[123px] h-[123px] flex items-center justify-center rounded-2xl overflow-hidden" },
       React.createElement("img", {
-        src: "http://localhost:3845/assets/875eed473dc5007247b3d5c7ea7fd77f7974eaa9.png",
+        src: "/assets/875eed473dc5007247b3d5c7ea7fd77f7974eaa9.png",
         alt: "DDx Icon",
         className: "w-full h-full object-cover",
       })
@@ -107,7 +107,7 @@ export const mockRewardCards = [
       "div",
       { className: "w-[120px] h-[110px] rounded-2xl flex items-center justify-center overflow-hidden" },
       React.createElement("img", {
-        src: "http://localhost:3845/assets/6a60bb1fb584b4f4b9dc5f0493a040cb3daa7844.png",
+        src: "/assets/6a60bb1fb584b4f4b9dc5f0493a040cb3daa7844.png",
         alt: "TatvaShots",
         className: "w-full h-full object-cover",
       })
@@ -125,7 +125,7 @@ export const mockRewardCards = [
       "div",
       { className: "w-[116px] h-[110px] rounded-2xl flex items-center justify-center overflow-hidden" },
       React.createElement("img", {
-        src: "http://localhost:3845/assets/f261b47381c5b61d61e2d3a8624259376455cd2a.png",
+        src: "/assets/f261b47381c5b61d61e2d3a8624259376455cd2a.png",
         alt: "Remote Care",
         className: "w-full h-full object-cover",
       })

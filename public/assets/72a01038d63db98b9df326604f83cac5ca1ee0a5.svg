@@ -1,0 +1,27 @@
+<svg preserveAspectRatio="none" width="100%" height="100%" overflow="visible" style="display: block;" viewBox="0 0 486 227" fill="none" xmlns="http://www.w3.org/2000/svg">
+<g id="circle bg" opacity="0.3" clip-path="url(#clip0_190_19453)">
+<path id="Ornament 2" d="M36.3601 31.0986C49.2191 31.0986 59.6432 41.5228 59.6433 54.3818C59.6433 67.2409 49.2192 77.665 36.3601 77.665C23.5011 77.6649 13.0769 67.2409 13.0769 54.3818C13.077 41.5229 23.5012 31.0988 36.3601 31.0986Z" stroke="var(--stroke-0, #A1AAFF)" stroke-opacity="0.4" stroke-width="10.705"/>
+<path id="Ornament 20" d="M471.493 131.515C484.352 131.515 494.776 141.939 494.776 154.798C494.776 167.657 484.352 178.081 471.493 178.081C458.634 178.081 448.21 167.657 448.21 154.798C448.21 141.939 458.634 131.515 471.493 131.515Z" stroke="var(--stroke-0, #A1AAFF)" stroke-opacity="0.4" stroke-width="10.705"/>
+<path id="Ornament 5" d="M28.0642 138.501C37.0802 138.501 44.3894 145.81 44.3894 154.826C44.3893 163.842 37.0801 171.151 28.0642 171.151C19.0482 171.151 11.7392 163.842 11.739 154.826C11.739 145.81 19.0481 138.501 28.0642 138.501Z" stroke="var(--stroke-0, #A1AAFF)" stroke-opacity="0.4" stroke-width="8.02877"/>
+<path id="Ornament 11" d="M384.667 127.602C393.683 127.602 400.992 134.911 400.992 143.928C400.992 152.943 393.683 160.253 384.667 160.253C375.651 160.253 368.342 152.944 368.342 143.928C368.342 134.911 375.651 127.602 384.667 127.602Z" stroke="var(--stroke-0, #A1AAFF)" stroke-opacity="0.4" stroke-width="8.02877"/>
+<path id="Ornament 7" d="M136.204 136.612C145.22 136.612 152.529 143.921 152.529 152.938C152.529 161.953 145.22 169.263 136.204 169.263C127.188 169.263 119.879 161.954 119.879 152.938C119.879 143.921 127.188 136.612 136.204 136.612Z" stroke="var(--stroke-0, #A1AAFF)" stroke-opacity="0.4" stroke-width="8.02877"/>
+<circle id="Ornament 3" cx="104.849" cy="40.961" r="10.705" fill="var(--fill-0, #A1AAFF)" fill-opacity="0.4"/>
+<circle id="Ornament 8" cx="151.466" cy="81.5117" r="10.705" fill="var(--fill-0, #A1AAFF)" fill-opacity="0.4"/>
+<circle id="Ornament 18" cx="423.954" cy="93.0976" r="10.705" fill="var(--fill-0, #A1AAFF)" fill-opacity="0.4"/>
+<circle id="Ornament 17" cx="187.075" cy="201.234" r="10.705" fill="var(--fill-0, #A1AAFF)" fill-opacity="0.4"/>
+<circle id="Ornament 16" cx="306.8" cy="120.131" r="10.705" fill="var(--fill-0, #A1AAFF)" fill-opacity="0.4"/>
+<circle id="Ornament 14" cx="423.954" cy="36.4511" r="10.705" fill="var(--fill-0, #A1AAFF)" fill-opacity="0.4"/>
+<circle id="Ornament 4" cx="71.4157" cy="103.595" r="14.7194" stroke="var(--stroke-0, #A1AAFF)" stroke-opacity="0.4" stroke-width="2.67626"/>
+<circle id="Ornament 6" cx="246.497" cy="180.839" r="14.7194" stroke="var(--stroke-0, #A1AAFF)" stroke-opacity="0.4" stroke-width="2.67626"/>
+<circle id="Ornament 9" cx="334.04" cy="57.2509" r="14.7194" stroke="var(--stroke-0, #A1AAFF)" stroke-opacity="0.4" stroke-width="2.67626"/>
+<circle id="Ornament 21" cx="471.789" cy="57.2509" r="14.7194" stroke="var(--stroke-0, #A1AAFF)" stroke-opacity="0.4" stroke-width="2.67626"/>
+<circle id="Ornament 19" cx="439.604" cy="216.89" r="14.7194" stroke="var(--stroke-0, #A1AAFF)" stroke-opacity="0.4" stroke-width="2.67626"/>
+<circle id="Ornament 15" cx="219.463" cy="120.333" r="14.7194" stroke="var(--stroke-0, #A1AAFF)" stroke-opacity="0.4" stroke-width="2.67626"/>
+<circle id="Ornament 12" cx="327.603" cy="211.737" r="14.7194" stroke="var(--stroke-0, #A1AAFF)" stroke-opacity="0.4" stroke-width="2.67626"/>
+</g>
+<defs>
+<clipPath id="clip0_190_19453">
+<rect width="485.047" height="226.578" fill="white"/>
+</clipPath>
+</defs>
+</svg>

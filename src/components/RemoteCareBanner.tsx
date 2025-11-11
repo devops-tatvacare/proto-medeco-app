@@ -26,12 +26,12 @@ interface RemoteCareBannerProps {
 
 export function RemoteCareBanner({ onCtaClick }: RemoteCareBannerProps) {
   // ======================================
-  // IMAGE ASSETS - From Figma (localhost)
+  // IMAGE ASSETS - Local assets downloaded from Figma
   // ======================================
-  const imgTeamPhoto = "http://localhost:3845/assets/5a4a4afca02f5518add3c389ee639ed1609f5ff9.png";
-  const imgLeftFigure = "http://localhost:3845/assets/bf5fa6c921e5e77d8623e3d55f60f0366078fa2a.png";
-  const imgCenterFigure = "http://localhost:3845/assets/23894fde73b643aa9dfd85e09cc39cdadef4bb75.png";
-  const imgOrnamentBg = "http://localhost:3845/assets/4a52fd1d04fe1024763db81cc3341bc16d881b6e.svg";
+  const imgTeamPhoto = "/assets/5a4a4afca02f5518add3c389ee639ed1609f5ff9.png";
+  const imgLeftFigure = "/assets/bf5fa6c921e5e77d8623e3d55f60f0366078fa2a.png";
+  const imgCenterFigure = "/assets/23894fde73b643aa9dfd85e09cc39cdadef4bb75.png";
+  const imgOrnamentBg = "/assets/4a52fd1d04fe1024763db81cc3341bc16d881b6e.svg";
 
   return (
     <div
