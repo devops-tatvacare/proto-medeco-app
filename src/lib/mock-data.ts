@@ -63,14 +63,14 @@ export const mockServices = [
   },
   {
     id: "content",
-    title: "Content",
+    title: "Continuing Medical Education",
     isSponsored: true,
     icon: React.createElement(
       "div",
       { className: "w-16 h-16 rounded-2xl flex items-center justify-center overflow-hidden" },
       React.createElement("img", {
         src: "/assets/6a60bb1fb584b4f4b9dc5f0493a040cb3daa7844.png",
-        alt: "Content",
+        alt: "Continuing Medical Education",
         className: "w-full h-full object-cover",
       })
     ),

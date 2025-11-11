@@ -6,11 +6,16 @@
 
 "use client";
 
-import { useRouter } from "next/navigation";
+import { Suspense } from "react";
+import { useRouter, useSearchParams } from "next/navigation";
 import { VideoDrilldown } from "@/components/VideoDrilldown";
 
-export default function VideoDrilldownPage() {
+function VideoDrilldownContent() {
   const router = useRouter();
+  const searchParams = useSearchParams();
+
+  const tab = searchParams.get("tab") as "topics" | "transcripts" | "chat" | null;
+  const initialTab = tab || "summary";
 
   const handleBackClick = () => {
     router.back();
@@ -32,6 +37,7 @@ export default function VideoDrilldownPage() {
               <VideoDrilldown
                 title="Ozempic is a game-changer. Here's how it works."
                 onBackClick={handleBackClick}
+                initialTab={initialTab}
               />
             </div>
           </div>
@@ -43,5 +49,13 @@ export default function VideoDrilldownPage() {
         </div>
       </div>
     </div>
+  );
+}
+
+export default function VideoDrilldownPage() {
+  return (
+    <Suspense fallback={<div>Loading...</div>}>
+      <VideoDrilldownContent />
+    </Suspense>
   );
 }

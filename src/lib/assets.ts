@@ -21,6 +21,7 @@ export const imageAssets = {
     feed: "/assets/tab-feed.svg",
     bookmarks: "/assets/tab-bookmarks.svg",
     settings: "/assets/settings-icon.svg",
+    settings2: "/assets/settings-2.svg",
   },
 
   // Branding & Logos

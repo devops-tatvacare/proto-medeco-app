@@ -77,7 +77,7 @@ export function ServiceCard({
 
         {/* Title */}
         <p
-          className="font-poppins font-semibold text-[16px] leading-[24px] text-[#48486f] text-center whitespace-nowrap"
+          className="font-poppins font-semibold text-[14px] leading-[18px] text-[#48486f] text-center break-words"
         >
           {title}
         </p>

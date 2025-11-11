@@ -34,7 +34,7 @@ export function TabBar({ onTabChange, onHomeClick, onBookmarksClick, onFeedClick
 
   const tabs = [
     { id: "home", label: "Home", isArrowBack: true },
-    { id: "discover", label: "Discover", icon: imageAssets.discover },
+    { id: "discover", label: "CME", icon: imageAssets.discover },
     { id: "bookmarks", label: "Notes", icon: imageAssets.bookmarks },
     { id: "feed", label: "Notebooks", icon: imageAssets.myFeed },
   ] as const;

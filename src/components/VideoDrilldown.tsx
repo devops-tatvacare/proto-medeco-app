@@ -9,19 +9,29 @@
 import React, { useState } from "react";
 import { typographyClasses } from "@/lib/design-tokens";
 import { ChatOverlay } from "./ChatOverlay";
+import { NotebookCreation } from "./NotebookCreation";
 
 interface VideoDrilldownProps {
   title: string;
   onBackClick?: () => void;
+  initialTab?: string;
 }
 
-type TabType = "summary" | "topics" | "transcript" | "notes";
+type TabType = "summary" | "topics" | "transcript" | "notes" | "transcripts" | "chat";
 
-export function VideoDrilldown({ title, onBackClick }: VideoDrilldownProps) {
-  const [activeTab, setActiveTab] = useState<TabType>("summary");
+export function VideoDrilldown({ title, onBackClick, initialTab = "summary" }: VideoDrilldownProps) {
+  // Map incoming tab names to internal tab names
+  const mapTabName = (tab: string): TabType => {
+    if (tab === "transcripts") return "transcript";
+    if (tab === "chat") return "notes";
+    return tab as TabType;
+  };
+
+  const [activeTab, setActiveTab] = useState<TabType>(mapTabName(initialTab));
   const [notes, setNotes] = useState<string[]>([]);
   const [selectedTranscriptIndex, setSelectedTranscriptIndex] = useState<number | null>(null);
   const [isChatOpen, setIsChatOpen] = useState(false);
+  const [showNotebookCreation, setShowNotebookCreation] = useState(false);
 
   // YouTube video ID extracted from: https://youtu.be/laPaezEsteI?si=kFmzvHoHxEs6Sfg0
   const youtubeVideoId = "laPaezEsteI";
@@ -74,6 +84,15 @@ export function VideoDrilldown({ title, onBackClick }: VideoDrilldownProps) {
     setNotes(notes.filter((_, i) => i !== index));
   };
 
+  // If notebook creation is open, show it
+  if (showNotebookCreation) {
+    return (
+      <NotebookCreation
+        onBackClick={() => setShowNotebookCreation(false)}
+      />
+    );
+  }
+
   return (
     <div className="w-full bg-neutral-50 flex flex-col h-full relative">
       {/* Sticky Header (120px total) */}
@@ -105,13 +124,7 @@ export function VideoDrilldown({ title, onBackClick }: VideoDrilldownProps) {
             </svg>
           </button>
 
-          <div className="h-[50px] flex-1 flex items-center">
-            <img
-              alt="TatvaShots"
-              src="/assets/IMG_0056.png"
-              className="h-full object-contain"
-            />
-          </div>
+          <div className="flex-1"></div>
 
           <div className="flex-shrink-0 w-8 h-8 flex items-center justify-center">
             <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
@@ -343,14 +356,28 @@ export function VideoDrilldown({ title, onBackClick }: VideoDrilldownProps) {
         </div>
       </div>
 
-      {/* Floating Action Button - Chat */}
-      <button
-        onClick={() => setIsChatOpen(true)}
-        className="absolute bottom-8 right-6 w-16 h-16 rounded-full bg-gradient-to-r from-purple-600 to-purple-700 shadow-lg hover:shadow-xl hover:scale-105 active:scale-95 transition-all flex items-center justify-center text-white font-semibold text-xs z-20 group"
-        aria-label="Open Tatva AI chat"
-      >
-        <span className="text-2xl group-hover:animate-pulse">💬</span>
-      </button>
+      {/* Floating Action Buttons */}
+      <div className="absolute bottom-8 right-6 flex items-center gap-3 z-20">
+        {/* Create Notebook FAB */}
+        <button
+          onClick={() => setShowNotebookCreation(true)}
+          className="w-14 h-14 rounded-full bg-gradient-to-r from-blue-600 to-blue-700 shadow-lg hover:shadow-xl hover:scale-105 active:scale-95 transition-all flex items-center justify-center text-white z-20"
+          aria-label="Create Notebook"
+        >
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
+            <path d="M12 5v14M5 12h14" strokeLinecap="round"/>
+          </svg>
+        </button>
+
+        {/* Chat FAB */}
+        <button
+          onClick={() => setIsChatOpen(true)}
+          className="w-16 h-16 rounded-full bg-gradient-to-r from-purple-600 to-purple-700 shadow-lg hover:shadow-xl hover:scale-105 active:scale-95 transition-all flex items-center justify-center text-white font-semibold text-xs z-20 group"
+          aria-label="Open Tatva AI chat"
+        >
+          <span className="text-2xl group-hover:animate-pulse">💬</span>
+        </button>
+      </div>
 
       {/* Chat Overlay */}
       {isChatOpen && (
