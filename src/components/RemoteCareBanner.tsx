@@ -164,13 +164,13 @@ export function RemoteCareBanner({ onCtaClick }: RemoteCareBannerProps) {
         style={{
           position: "absolute",
           width: "100%",
-          height: "450px", // FIX #5: Changed from 522px to 450px (container height)
-          top: "0", // FIX #5: Changed from -35px to 0 (align with container)
+          height: "450px",
+          top: "0",
           left: "0",
           background:
-            "linear-gradient(180deg, rgba(255, 255, 255, 0.8) 0%, rgba(233, 235, 255, 0.7) 25%, rgba(205, 210, 255, 0.6) 45%, rgba(205, 210, 255, 0.5) 100%)",
+            "linear-gradient(180deg, rgba(255, 255, 255, 0) 0%, rgba(233, 235, 255, 0) 40%, rgba(205, 210, 255, 0) 100%)",
           pointerEvents: "none",
-          zIndex: 2, // FIX #2: ABOVE images (z:1) for proper fade effect
+          zIndex: 2,
         }}
         data-name="Gradient Layer"
         data-node-id="1:8876"

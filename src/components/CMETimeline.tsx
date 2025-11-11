@@ -81,9 +81,9 @@ export function CMETimeline() {
 
   // Otherwise show timeline
   return (
-    <div className="w-full flex flex-col gap-6 pb-8 px-6 pt-6">
+    <div className="w-full flex flex-col gap-4 pb-6 px-4 pt-4">
       {mockDateSections.map((section, idx) => (
-        <div key={idx} className="flex flex-col gap-4">
+        <div key={idx} className="flex flex-col gap-3">
           {/* Date Header */}
           <h2 className={`${typographyClasses.h3Medium} text-gray-900`}>
             {section.date}
@@ -92,12 +92,12 @@ export function CMETimeline() {
           {/* Summary Card - Clickable */}
           <button
             onClick={() => handleDateClick(section.date)}
-            className="w-full bg-white rounded-2xl p-6 shadow-md hover:shadow-lg transition-shadow cursor-pointer text-left border border-gray-100 active:scale-[0.98]"
+            className="w-full bg-white rounded-xl p-4 shadow-md hover:shadow-lg transition-shadow cursor-pointer text-left border border-gray-100 active:scale-[0.98]"
           >
-            <div className="flex flex-col gap-2">
+            <div className="flex flex-col gap-1.5">
               {/* Session Count Badge */}
               <div className="w-fit">
-                <div className="bg-purple-100 rounded-full px-3 py-1 inline-block">
+                <div className="bg-purple-100 rounded-full px-2 py-0.5 inline-block">
                   <span className={`${typographyClasses.caption1Bold} text-purple-900`}>
                     {section.sessions.length} SESSIONS
                   </span>
@@ -110,13 +110,13 @@ export function CMETimeline() {
               </p>
 
               {/* Arrow Indicator and Logo Row */}
-              <div className="flex items-center justify-between gap-3 mt-2">
-                <div className="flex items-center gap-2">
+              <div className="flex items-center justify-between gap-2 mt-1">
+                <div className="flex items-center gap-1.5">
                   <span className={`${typographyClasses.sh2} text-purple-600 font-semibold`}>
                     View Sessions
                   </span>
                   <svg
-                    className="w-5 h-5 text-purple-600"
+                    className="w-4 h-4 text-purple-600"
                     fill="none"
                     stroke="currentColor"
                     viewBox="0 0 24 24"
@@ -126,7 +126,7 @@ export function CMETimeline() {
                 </div>
 
                 {/* Zydus Logo */}
-                <div className="flex-shrink-0 w-16 h-10 bg-gray-50 rounded-lg p-1.5 flex items-center justify-center border border-gray-200">
+                <div className="flex-shrink-0 w-14 h-8 bg-gray-50 rounded-lg p-1 flex items-center justify-center border border-gray-200">
                   <img
                     src="/assets/zydus-logo.png"
                     alt="Zydus"

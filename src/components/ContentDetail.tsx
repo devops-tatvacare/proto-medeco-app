@@ -49,36 +49,38 @@ export function ContentDetail({ onBackClick }: ContentDetailProps) {
     <div className="w-full bg-neutral-50 flex flex-col h-full">
       {/* Status Bar - Always shown */}
       <div className="sticky top-0 z-50 w-full bg-white shadow-[0px_2px_18px_0px_rgba(0,0,0,0.08)]">
-        {/* Status Bar Row (54px) */}
-        <div className="flex items-center justify-between px-4 py-3 h-[54px] bg-white">
+        {/* Status Bar Row */}
+        <div className="flex items-center justify-between px-6 py-3 h-[54px] bg-white">
           {/* Time */}
-          <p className="font-poppins font-medium text-[16px] text-black tracking-[0.1px]">
+          <p className="font-poppins font-medium text-base text-black tracking-[0.1px]">
             9:41
           </p>
 
           {/* Status Icons */}
-          <div className="flex items-center gap-1">
-            {/* Cellular */}
-            <div className="w-[19.2px] h-[10.41px] flex items-center justify-center">
-              <img alt="cellular" src={imageAssets.statusBar.cellular} className="w-full h-full" />
-            </div>
-
+          <div className="flex items-center gap-1.5 text-black">
+            {/* Signal strength */}
+            <svg width="17" height="12" viewBox="0 0 17 12" fill="none">
+              <rect x="0" y="7" width="3" height="5" rx="1" fill="currentColor" />
+              <rect x="4.5" y="5" width="3" height="7" rx="1" fill="currentColor" />
+              <rect x="9" y="3" width="3" height="9" rx="1" fill="currentColor" />
+              <rect x="13.5" y="0" width="3" height="12" rx="1" fill="currentColor" />
+            </svg>
             {/* WiFi */}
-            <div className="w-[17.142px] h-[10.23px] flex items-center justify-center">
-              <img alt="wifi" src={imageAssets.statusBar.wifi} className="w-full h-full" />
-            </div>
-
+            <svg width="15" height="11" viewBox="0 0 15 11" fill="none" className="ml-1">
+              <path d="M0 3.5C2.5 1 5 0 7.5 0C10 0 12.5 1 15 3.5M3 6.5C4.5 5 6 4.5 7.5 4.5C9 4.5 10.5 5 12 6.5M6 9.5C6.5 9 7 8.5 7.5 8.5C8 8.5 8.5 9 9 9.5" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
+            </svg>
             {/* Battery */}
-            <div className="w-[25px] h-[12px] flex items-center justify-center relative">
-              <div className="absolute border border-black border-solid opacity-[0.35] rounded-[4.3px] w-[25px] h-[12px]" />
-              <div className="absolute bg-black rounded-[2.5px] w-[21px] h-[5.33px]" />
-            </div>
+            <svg width="25" height="12" viewBox="0 0 25 12" fill="none" className="ml-1">
+              <rect x="0.5" y="0.5" width="21" height="11" rx="2.5" stroke="currentColor" />
+              <rect x="2" y="2" width="18" height="8" rx="1" fill="currentColor" />
+              <rect x="23" y="4" width="2" height="4" rx="1" fill="currentColor" />
+            </svg>
           </div>
         </div>
 
         {/* Header Content Row - Only shown for Discover view */}
         {activeView === "discover" && (
-        <div className="flex items-center justify-between px-4 py-2 h-[66px] bg-white border-t border-gray-100 gap-3">
+        <div className="flex items-center justify-between px-6 py-2 h-[66px] bg-white border-t border-gray-100 gap-3">
           {/* Logo */}
           <div className="flex-1 flex items-center overflow-hidden">
             <img

@@ -95,25 +95,36 @@ export function VideoDrilldown({ title, onBackClick, initialTab = "summary" }: V
 
   return (
     <div className="w-full bg-neutral-50 flex flex-col h-full relative">
-      {/* Sticky Header (120px total) */}
+      {/* Sticky Header */}
       <div className="sticky top-0 z-30 w-full bg-white shadow-[0px_2px_18px_0px_rgba(0,0,0,0.08)]">
-        {/* Status Bar Row (54px) */}
-        <div className="flex items-center justify-between px-4 py-3 h-[54px] bg-white">
-          <p className="font-poppins font-medium text-[16px] text-black tracking-[0.1px]">
+        {/* Status Bar Row */}
+        <div className="flex items-center justify-between px-6 py-3 h-[54px] bg-white">
+          <p className="font-poppins font-medium text-base text-black tracking-[0.1px]">
             9:41
           </p>
-          <div className="flex items-center gap-1">
-            <div className="w-[19.2px] h-[10.41px]" />
-            <div className="w-[17.142px] h-[10.23px]" />
-            <div className="w-[25px] h-[12px] flex items-center justify-center relative">
-              <div className="absolute border border-black border-solid opacity-[0.35] rounded-[4.3px] w-[25px] h-[12px]" />
-              <div className="absolute bg-black rounded-[2.5px] w-[21px] h-[5.33px]" />
-            </div>
+          <div className="flex items-center gap-1.5 text-black">
+            {/* Signal strength */}
+            <svg width="17" height="12" viewBox="0 0 17 12" fill="none">
+              <rect x="0" y="7" width="3" height="5" rx="1" fill="currentColor" />
+              <rect x="4.5" y="5" width="3" height="7" rx="1" fill="currentColor" />
+              <rect x="9" y="3" width="3" height="9" rx="1" fill="currentColor" />
+              <rect x="13.5" y="0" width="3" height="12" rx="1" fill="currentColor" />
+            </svg>
+            {/* WiFi */}
+            <svg width="15" height="11" viewBox="0 0 15 11" fill="none" className="ml-1">
+              <path d="M0 3.5C2.5 1 5 0 7.5 0C10 0 12.5 1 15 3.5M3 6.5C4.5 5 6 4.5 7.5 4.5C9 4.5 10.5 5 12 6.5M6 9.5C6.5 9 7 8.5 7.5 8.5C8 8.5 8.5 9 9 9.5" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
+            </svg>
+            {/* Battery */}
+            <svg width="25" height="12" viewBox="0 0 25 12" fill="none" className="ml-1">
+              <rect x="0.5" y="0.5" width="21" height="11" rx="2.5" stroke="currentColor" />
+              <rect x="2" y="2" width="18" height="8" rx="1" fill="currentColor" />
+              <rect x="23" y="4" width="2" height="4" rx="1" fill="currentColor" />
+            </svg>
           </div>
         </div>
 
-        {/* Header Content Row (66px) */}
-        <div className="flex items-center justify-between px-4 py-3 h-[66px] bg-white border-t border-gray-100 gap-3">
+        {/* Header Content Row */}
+        <div className="flex items-center justify-between px-6 py-3 h-[66px] bg-white border-t border-gray-100 gap-3">
           <button
             onClick={onBackClick}
             className="flex-shrink-0 w-8 h-8 flex items-center justify-center hover:bg-gray-100 active:bg-gray-200 rounded-lg transition-colors"
@@ -139,14 +150,14 @@ export function VideoDrilldown({ title, onBackClick, initialTab = "summary" }: V
       {/* Scrollable Content Area with Sticky Tabs */}
       <div className="flex-1 overflow-y-auto scrollbar-hide w-full flex flex-col">
         {/* Non-scrolling Header Section */}
-        <div className="px-6 pt-6 flex-shrink-0">
+        <div className="px-4 pt-4 flex-shrink-0">
           {/* Title */}
-          <h1 className={`${typographyClasses.h1} text-gray-900 mb-6`}>
+          <h1 className={`${typographyClasses.h1} text-gray-900 mb-4`}>
             {title}
           </h1>
 
           {/* YouTube Video Embed - Inline player */}
-          <div className="w-full bg-black rounded-2xl overflow-hidden mb-6 shadow-md">
+          <div className="w-full bg-black rounded-xl overflow-hidden mb-4 shadow-md">
             <div className="relative w-full pt-[56.25%]">
               <iframe
                 className="absolute inset-0 w-full h-full"
@@ -162,12 +173,12 @@ export function VideoDrilldown({ title, onBackClick, initialTab = "summary" }: V
 
         {/* Sticky Tab Navigation */}
         <div className="sticky top-0 z-40 bg-white border-b border-gray-200 flex-shrink-0">
-          <div className="flex -mx-6">
+          <div className="flex -mx-4">
             {["summary", "topics", "transcript", "notes"].map((tab) => (
               <button
                 key={tab}
                 onClick={() => setActiveTab(tab as TabType)}
-                className={`flex-1 py-3 font-semibold text-sm transition-all capitalize text-center ${
+                className={`flex-1 py-2 font-semibold text-xs transition-all capitalize text-center ${
                   activeTab === tab
                     ? "text-purple-600 border-b-2 border-purple-600 -mb-px bg-purple-50"
                     : "text-gray-600 hover:text-gray-700 hover:bg-gray-50"
@@ -181,12 +192,12 @@ export function VideoDrilldown({ title, onBackClick, initialTab = "summary" }: V
 
         {/* Scrollable Tab Content */}
         <div className="flex-1 overflow-y-auto scrollbar-hide">
-          <div className="px-6 py-6 pb-8 space-y-4">
+          <div className="px-4 py-4 pb-6 space-y-3">
             {activeTab === "summary" && (
-              <div className="space-y-4">
+              <div className="space-y-3">
                 {/* Main Summary Box with Gradient */}
-                <div className="bg-gradient-to-br from-white to-purple-50 rounded-2xl border border-purple-100 p-5 shadow-sm">
-                  <p className={`${typographyClasses.sh1} text-gray-700 leading-relaxed mb-3`}>
+                <div className="bg-gradient-to-br from-white to-purple-50 rounded-xl border border-purple-100 p-4 shadow-sm">
+                  <p className={`${typographyClasses.sh1} text-gray-700 leading-relaxed mb-2`}>
                     Ozempic, a medication developed to manage type 2 diabetes, has been in the news a lot lately because of one of its signature side effects: drastic weight loss. Both Ozempic and Wegovy are brand names of a drug called semaglutide—one of several drugs that mimic GLP-1, a crucial digestive hormone that amplifies a process our bodies perform naturally.
                   </p>
 
@@ -196,24 +207,24 @@ export function VideoDrilldown({ title, onBackClick, initialTab = "summary" }: V
                 </div>
 
                 {/* Key Mechanisms Box */}
-                <div className="bg-gradient-to-br from-purple-50 to-purple-100 rounded-2xl border border-purple-200 p-5 shadow-sm">
-                  <h3 className="font-semibold text-purple-900 mb-3 text-sm">How GLP-1 Works</h3>
-                  <div className="space-y-2.5">
-                    <div className="flex gap-2.5">
-                      <div className="flex-shrink-0 w-5 h-5 rounded-full bg-purple-600 flex items-center justify-center">
-                        <span className="text-white text-xs font-semibold">1</span>
+                <div className="bg-gradient-to-br from-purple-50 to-purple-100 rounded-xl border border-purple-200 p-3 shadow-sm">
+                  <h3 className="font-semibold text-purple-900 mb-2 text-xs">How GLP-1 Works</h3>
+                  <div className="space-y-2">
+                    <div className="flex gap-2">
+                      <div className="flex-shrink-0 w-4 h-4 rounded-full bg-purple-600 flex items-center justify-center">
+                        <span className="text-white text-[9px] font-semibold">1</span>
                       </div>
                       <p className={`${typographyClasses.sh1} text-purple-800`}><span className="font-semibold">Pancreas:</span> Promotes insulin production and suppresses glucagon</p>
                     </div>
-                    <div className="flex gap-2.5">
-                      <div className="flex-shrink-0 w-5 h-5 rounded-full bg-purple-600 flex items-center justify-center">
-                        <span className="text-white text-xs font-semibold">2</span>
+                    <div className="flex gap-2">
+                      <div className="flex-shrink-0 w-4 h-4 rounded-full bg-purple-600 flex items-center justify-center">
+                        <span className="text-white text-[9px] font-semibold">2</span>
                       </div>
                       <p className={`${typographyClasses.sh1} text-purple-800`}><span className="font-semibold">Stomach:</span> Slows gastric emptying and extends feeling of fullness</p>
                     </div>
-                    <div className="flex gap-2.5">
-                      <div className="flex-shrink-0 w-5 h-5 rounded-full bg-purple-600 flex items-center justify-center">
-                        <span className="text-white text-xs font-semibold">3</span>
+                    <div className="flex gap-2">
+                      <div className="flex-shrink-0 w-4 h-4 rounded-full bg-purple-600 flex items-center justify-center">
+                        <span className="text-white text-[9px] font-semibold">3</span>
                       </div>
                       <p className={`${typographyClasses.sh1} text-purple-800`}><span className="font-semibold">Brain:</span> Suppresses appetite and promotes satiety</p>
                     </div>
@@ -223,11 +234,11 @@ export function VideoDrilldown({ title, onBackClick, initialTab = "summary" }: V
             )}
 
             {activeTab === "topics" && (
-              <div className="space-y-5">
+              <div className="space-y-3">
                 {/* Timeline Seeker Card */}
-                <div className="bg-white rounded-2xl border border-gray-100 p-5 shadow-sm">
+                <div className="bg-white rounded-xl border border-gray-100 p-3 shadow-sm">
                   {/* Timeline progress bar */}
-                  <div className="mb-5">
+                  <div className="mb-3">
                     <div className="w-full h-2 bg-gray-200 rounded-full overflow-hidden">
                       <div className="h-full w-1/4 bg-purple-600 rounded-full" />
                     </div>
@@ -262,11 +273,11 @@ export function VideoDrilldown({ title, onBackClick, initialTab = "summary" }: V
                 </div>
 
                 {/* Topics List */}
-                <div className="space-y-2.5">
+                <div className="space-y-2">
                   {topics.map((topic, idx) => (
                     <div
                       key={idx}
-                      className="flex items-center justify-between p-4 bg-white rounded-xl border border-gray-100 hover:border-purple-200 hover:shadow-sm transition-all cursor-pointer group"
+                      className="flex items-center justify-between p-3 bg-white rounded-xl border border-gray-100 hover:border-purple-200 hover:shadow-sm transition-all cursor-pointer group"
                     >
                       <div className="flex items-center gap-3 flex-1 min-w-0">
                         <div className={`w-4 h-4 rounded-full flex-shrink-0 ${topic.color} shadow-sm`} />
@@ -282,9 +293,9 @@ export function VideoDrilldown({ title, onBackClick, initialTab = "summary" }: V
                 </div>
 
                 {/* Play All Button */}
-                <div className="flex justify-center pt-2">
-                  <button className="flex items-center gap-2 px-6 py-3 bg-black text-white rounded-full font-semibold text-sm hover:bg-gray-900 transition-colors">
-                    <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
+                <div className="flex justify-center pt-1">
+                  <button className="flex items-center gap-1.5 px-5 py-2 bg-black text-white rounded-full font-semibold text-xs hover:bg-gray-900 transition-colors">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor">
                       <polygon points="5 3 19 12 5 21 5 3" />
                     </svg>
                     Play All
@@ -294,20 +305,20 @@ export function VideoDrilldown({ title, onBackClick, initialTab = "summary" }: V
             )}
 
             {activeTab === "transcript" && (
-              <div className="space-y-3">
+              <div className="space-y-2">
                 {transcriptData.map((item, idx) => (
                   <div
                     key={idx}
-                    className={`p-4 rounded-xl transition-all cursor-pointer border ${
+                    className={`p-3 rounded-lg transition-all cursor-pointer border ${
                       selectedTranscriptIndex === idx
                         ? "bg-purple-50 border-purple-300"
                         : "bg-white border-gray-100 hover:border-purple-200"
                     }`}
                     onClick={() => handleAddNote(idx)}
                   >
-                    <div className="flex gap-3">
+                    <div className="flex gap-2">
                       <div className="flex-shrink-0">
-                        <p className="text-xs font-semibold text-purple-600 bg-purple-100 px-2 py-1 rounded">
+                        <p className="text-[10px] font-semibold text-purple-600 bg-purple-100 px-1.5 py-0.5 rounded">
                           {item.time}
                         </p>
                       </div>
@@ -318,7 +329,7 @@ export function VideoDrilldown({ title, onBackClick, initialTab = "summary" }: V
                             e.stopPropagation();
                             handleAddNote(idx);
                           }}
-                          className="text-xs text-purple-600 font-semibold mt-2 hover:text-purple-700"
+                          className="text-[10px] text-purple-600 font-semibold mt-1 hover:text-purple-700"
                         >
                           + Add to Notes
                         </button>
@@ -330,20 +341,20 @@ export function VideoDrilldown({ title, onBackClick, initialTab = "summary" }: V
             )}
 
             {activeTab === "notes" && (
-              <div className="space-y-3">
+              <div className="space-y-2">
                 {notes.length === 0 ? (
-                  <div className="text-center py-12">
+                  <div className="text-center py-8">
                     <p className={`${typographyClasses.sh1} text-gray-500`}>
                       No notes yet. Select from transcript to add notes.
                     </p>
                   </div>
                 ) : (
                   notes.map((note, idx) => (
-                    <div key={idx} className="p-4 bg-white rounded-xl border border-gray-100 group">
-                      <p className={`${typographyClasses.sh1} text-gray-700 leading-relaxed mb-2`}>{note}</p>
+                    <div key={idx} className="p-3 bg-white rounded-lg border border-gray-100 group">
+                      <p className={`${typographyClasses.sh1} text-gray-700 leading-relaxed mb-1`}>{note}</p>
                       <button
                         onClick={() => handleRemoveNote(idx)}
-                        className="text-xs text-red-600 font-semibold hover:text-red-700 opacity-0 group-hover:opacity-100 transition-opacity"
+                        className="text-[10px] text-red-600 font-semibold hover:text-red-700 opacity-0 group-hover:opacity-100 transition-opacity"
                       >
                         ✕ Remove
                       </button>
@@ -357,14 +368,14 @@ export function VideoDrilldown({ title, onBackClick, initialTab = "summary" }: V
       </div>
 
       {/* Floating Action Buttons */}
-      <div className="absolute bottom-8 right-6 flex items-center gap-3 z-20">
+      <div className="absolute bottom-6 right-4 flex items-center gap-2 z-20">
         {/* Create Notebook FAB */}
         <button
           onClick={() => setShowNotebookCreation(true)}
-          className="w-14 h-14 rounded-full bg-gradient-to-r from-blue-600 to-blue-700 shadow-lg hover:shadow-xl hover:scale-105 active:scale-95 transition-all flex items-center justify-center text-white z-20"
+          className="w-12 h-12 rounded-full bg-gradient-to-r from-blue-600 to-blue-700 shadow-lg hover:shadow-xl hover:scale-105 active:scale-95 transition-all flex items-center justify-center text-white z-20"
           aria-label="Create Notebook"
         >
-          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
             <path d="M12 5v14M5 12h14" strokeLinecap="round"/>
           </svg>
         </button>
@@ -372,10 +383,10 @@ export function VideoDrilldown({ title, onBackClick, initialTab = "summary" }: V
         {/* Chat FAB */}
         <button
           onClick={() => setIsChatOpen(true)}
-          className="w-16 h-16 rounded-full bg-gradient-to-r from-purple-600 to-purple-700 shadow-lg hover:shadow-xl hover:scale-105 active:scale-95 transition-all flex items-center justify-center text-white font-semibold text-xs z-20 group"
+          className="w-14 h-14 rounded-full bg-gradient-to-r from-purple-600 to-purple-700 shadow-lg hover:shadow-xl hover:scale-105 active:scale-95 transition-all flex items-center justify-center text-white font-semibold text-xs z-20 group"
           aria-label="Open Tatva AI chat"
         >
-          <span className="text-2xl group-hover:animate-pulse">💬</span>
+          <span className="text-xl group-hover:animate-pulse">💬</span>
         </button>
       </div>
 

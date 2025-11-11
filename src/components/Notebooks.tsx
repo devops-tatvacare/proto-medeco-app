@@ -101,17 +101,17 @@ export function Notebooks({ }: NotebooksProps) {
       {/* Search and Filter Section */}
       <div className="sticky top-0 z-30 bg-white border-b border-gray-100">
         {/* Search Bar */}
-        <div className="px-6 py-4">
+        <div className="px-4 py-3">
           <div className="relative">
             <input
               type="text"
               placeholder="Search notebooks..."
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
-              className="w-full pl-10 pr-4 py-3 bg-white border border-gray-300 rounded-xl text-gray-900 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-purple-600 focus:border-transparent transition-all"
+              className="w-full pl-8 pr-3 py-2 bg-white border border-gray-300 rounded-lg text-sm text-gray-900 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-purple-600 focus:border-transparent transition-all"
             />
             <svg
-              className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400"
+              className="absolute left-2.5 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400"
               fill="none"
               stroke="currentColor"
               viewBox="0 0 24 24"
@@ -122,10 +122,10 @@ export function Notebooks({ }: NotebooksProps) {
         </div>
 
         {/* Filter Chips */}
-        <div className="px-6 pb-4 flex gap-2 overflow-x-auto scrollbar-hide">
+        <div className="px-4 pb-3 flex gap-2 overflow-x-auto scrollbar-hide">
           <button
             onClick={() => setSelectedFilter(null)}
-            className={`flex-shrink-0 px-4 py-2 rounded-full text-sm font-semibold transition-all whitespace-nowrap ${
+            className={`flex-shrink-0 px-3 py-1.5 rounded-full text-xs font-semibold transition-all whitespace-nowrap ${
               selectedFilter === null
                 ? "bg-purple-600 text-white"
                 : "bg-gray-100 text-gray-700 hover:bg-gray-200"
@@ -135,7 +135,7 @@ export function Notebooks({ }: NotebooksProps) {
           </button>
           <button
             onClick={() => setSelectedFilter("recent")}
-            className={`flex-shrink-0 px-4 py-2 rounded-full text-sm font-semibold transition-all whitespace-nowrap ${
+            className={`flex-shrink-0 px-3 py-1.5 rounded-full text-xs font-semibold transition-all whitespace-nowrap ${
               selectedFilter === "recent"
                 ? "bg-purple-600 text-white"
                 : "bg-gray-100 text-gray-700 hover:bg-gray-200"
@@ -145,7 +145,7 @@ export function Notebooks({ }: NotebooksProps) {
           </button>
           <button
             onClick={() => setSelectedFilter("popular")}
-            className={`flex-shrink-0 px-4 py-2 rounded-full text-sm font-semibold transition-all whitespace-nowrap ${
+            className={`flex-shrink-0 px-3 py-1.5 rounded-full text-xs font-semibold transition-all whitespace-nowrap ${
               selectedFilter === "popular"
                 ? "bg-purple-600 text-white"
                 : "bg-gray-100 text-gray-700 hover:bg-gray-200"
@@ -157,10 +157,10 @@ export function Notebooks({ }: NotebooksProps) {
       </div>
 
       <div className="flex-1 overflow-y-auto scrollbar-hide w-full flex flex-col">
-        <div className="w-full flex flex-col pb-8 px-6 pt-6">
+        <div className="w-full flex flex-col pb-6 px-4 pt-4">
         {/* Title Section */}
-        <div className="mb-6">
-          <h1 className={`${typographyClasses.h1} text-gray-900 mb-2`}>
+        <div className="mb-4">
+          <h1 className={`${typographyClasses.h1} text-gray-900 mb-1`}>
             My Notebooks
           </h1>
           <p className={`${typographyClasses.sh1} text-gray-500`}>
@@ -170,35 +170,35 @@ export function Notebooks({ }: NotebooksProps) {
 
         {/* Notebooks List - Vertical Stack */}
         {filteredNotebooks.length > 0 ? (
-        <div className="space-y-4">
+        <div className="space-y-3">
           {filteredNotebooks.map((notebook) => (
             <button
               key={notebook.id}
               onClick={() => setSelectedNotebook(notebook)}
               className="w-full text-left transition-all hover:shadow-md active:scale-95"
             >
-              <div className={`bg-gradient-to-r ${notebook.bgGradient} rounded-2xl p-5 shadow-md text-white`}>
+              <div className={`bg-gradient-to-r ${notebook.bgGradient} rounded-xl p-4 shadow-md text-white`}>
                 {/* Notebook Header */}
-                <div className="flex items-start justify-between mb-3">
+                <div className="flex items-start justify-between mb-2">
                   <div className="flex-1 min-w-0">
-                    <h2 className="font-semibold text-lg leading-tight mb-1">
+                    <h2 className="font-semibold text-base leading-tight mb-1">
                       {notebook.title}
                     </h2>
                     {notebook.description && (
-                      <p className="text-sm opacity-90 line-clamp-2">
+                      <p className="text-xs opacity-90 line-clamp-2">
                         {notebook.description}
                       </p>
                     )}
                   </div>
-                  <div className="flex-shrink-0 ml-3 w-8 h-8 rounded-full bg-white/20 flex items-center justify-center">
-                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                  <div className="flex-shrink-0 ml-2 w-7 h-7 rounded-full bg-white/20 flex items-center justify-center">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
                       <path d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2" />
                     </svg>
                   </div>
                 </div>
 
                 {/* Notebook Meta */}
-                <div className="flex items-center justify-between text-xs opacity-85">
+                <div className="flex items-center justify-between text-[10px] opacity-85">
                   <span>{notebook.itemCount} item{notebook.itemCount !== 1 ? "s" : ""}</span>
                   <span>{notebook.createdAt}</span>
                 </div>
@@ -207,12 +207,12 @@ export function Notebooks({ }: NotebooksProps) {
           ))}
         </div>
         ) : (
-          <div className="flex flex-col items-center justify-center py-16 text-center">
-            <div className="text-5xl mb-4">🔍</div>
-            <p className={`${typographyClasses.h3SemiBold} text-gray-600 mb-2`}>
+          <div className="flex flex-col items-center justify-center py-12 text-center">
+            <div className="text-4xl mb-3">🔍</div>
+            <p className={`${typographyClasses.h3SemiBold} text-gray-600 mb-1.5`}>
               {notebooks.length === 0 ? "No notebooks yet" : "No matching notebooks"}
             </p>
-            <p className={`${typographyClasses.sh1} text-gray-500 mb-6`}>
+            <p className={`${typographyClasses.sh1} text-gray-500 mb-4`}>
               {notebooks.length === 0
                 ? "Create your first notebook to start organizing your notes"
                 : "Try adjusting your search or filters"}
@@ -220,7 +220,7 @@ export function Notebooks({ }: NotebooksProps) {
             {notebooks.length === 0 && (
               <button
                 onClick={() => setShowCreation(true)}
-                className="px-6 py-3 bg-purple-600 text-white rounded-full font-semibold hover:bg-purple-700 transition-colors"
+                className="px-5 py-2 bg-purple-600 text-white rounded-full text-sm font-semibold hover:bg-purple-700 transition-colors"
               >
                 Create Notebook
               </button>
@@ -233,7 +233,7 @@ export function Notebooks({ }: NotebooksProps) {
       {/* Floating Action Button - Create Notebook */}
       <button
         onClick={() => setShowCreation(true)}
-        className="absolute bottom-8 right-6 w-16 h-16 rounded-full bg-gradient-to-r from-purple-600 to-purple-700 shadow-lg hover:shadow-xl hover:scale-105 active:scale-95 transition-all flex items-center justify-center text-white font-semibold text-2xl z-20 group"
+        className="absolute bottom-6 right-4 w-14 h-14 rounded-full bg-gradient-to-r from-purple-600 to-purple-700 shadow-lg hover:shadow-xl hover:scale-105 active:scale-95 transition-all flex items-center justify-center text-white font-semibold text-xl z-20 group"
         aria-label="Create new notebook"
       >
         <span className="group-hover:animate-pulse">+</span>

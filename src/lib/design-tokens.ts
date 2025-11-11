@@ -127,14 +127,15 @@ export const spacing = {
 
 // Typography CSS class helpers
 export const typographyClasses = {
-  h1: "font-poppins font-semibold text-2xl leading-8",
-  h3Medium: "font-poppins font-medium text-lg leading-[26px]",
-  h3SemiBold: "font-poppins font-semibold text-lg leading-[26px]",
-  h4Medium: "font-poppins font-medium text-base leading-6",
-  h4SemiBold: "font-poppins font-semibold text-base leading-6",
-  sh1: "font-poppins font-normal text-sm leading-[22px]",
-  sh2: "font-poppins font-normal text-xs leading-[18px]",
-  body2: "font-manrope font-normal text-sm leading-[22px]",
-  caption1Bold: "font-manrope font-bold text-xs leading-4",
-  caption2: "font-manrope font-normal text-[10px] leading-[14px]",
+  h1: "font-poppins font-semibold text-xl leading-7",
+  h3Medium: "font-poppins font-medium text-base leading-6",
+  h3SemiBold: "font-poppins font-semibold text-base leading-6",
+  h4Medium: "font-poppins font-medium text-sm leading-5",
+  h4SemiBold: "font-poppins font-semibold text-sm leading-5",
+  sh1: "font-poppins font-normal text-xs leading-[18px]",
+  sh2: "font-poppins font-normal text-[11px] leading-4",
+  body2: "font-manrope font-normal text-xs leading-[18px]",
+  body1: "font-manrope font-normal text-sm leading-5",
+  caption1Bold: "font-manrope font-bold text-[11px] leading-4",
+  caption2: "font-manrope font-normal text-[9px] leading-3",
 };

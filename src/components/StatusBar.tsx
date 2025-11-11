@@ -42,7 +42,7 @@ export function StatusBar({
             {currentTime}
           </span>
         </div>
-        <div className="flex items-center gap-1">
+        <div className="flex items-center gap-1.5 text-black">
           {/* Signal strength */}
           <svg width="17" height="12" viewBox="0 0 17 12" fill="none">
             <rect x="0" y="7" width="3" height="5" rx="1" fill="currentColor" />
@@ -102,7 +102,7 @@ export function StatusBar({
       </div>
 
       {/* Header with greeting */}
-      <div className="flex items-center justify-between px-4 py-4 border-b border-gray-100">
+      <div className="flex items-center justify-between px-6 py-4 border-b border-gray-100">
         <h1 className={`${typographyClasses.h4Medium} text-gray-900`}>
           Hi, {userName} 👋
         </h1>
