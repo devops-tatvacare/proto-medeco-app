@@ -20,6 +20,8 @@ export default function Home() {
   const handleServiceClick = (serviceId: string) => {
     if (serviceId === "content") {
       router.push("/content");
+    } else if (serviceId === "ddx") {
+      router.push("/ddx");
     }
   };
   return (
@@ -51,7 +53,13 @@ export default function Home() {
             icon={card.icon}
             isSponsored={card.isSponsored}
             variant={card.variant}
-            onCtaClick={() => console.log(`${card.id} clicked`)}
+            onCtaClick={() => {
+              if (card.id === "differential-diagnosis") {
+                router.push("/ddx");
+              } else {
+                console.log(`${card.id} clicked`);
+              }
+            }}
           />
         ))}
       </section>

@@ -1,0 +1,368 @@
+{
+  "project": {
+    "name": "medeco-hcp-app",
+    "flow": "Project app landing screen → Our offerings → Generate DDx",
+    "framework": "Next.js 16 + React 19 + TypeScript + Tailwind CSS",
+    "assetsPath": "/public/assets/"
+  },
+  "captureSequence": [
+    {
+      "sequence": 1,
+      "nodeId": "1:29294",
+      "nodeName": "109",
+      "description": "DDx Welcome and Introduction Screen - Purple gradient background with 'Welcome to DDx' header, card showing 'Revolutionize Diagnosis with AI' with features and 'How it works' steps",
+      "timestamp": "2025-11-18T17:13:00Z",
+      "assets": [
+        "/public/assets/703ac4e5d1d1c24fe4d000c5f2489bfb188e9b1b.png",
+        "/public/assets/d1c6a60fbb2b193f096c2d24c0f540ef2bad7b38.png",
+        "/public/assets/abb2301ad16058fa8827c570fb498efa2288a073.png",
+        "/public/assets/71c0e1a4610258c12a4ec96bb1795b6d14c6147e.svg",
+        "/public/assets/07ce7b5db065db1ad24f058805af621cb414550c.svg",
+        "/public/assets/d52b8f244747ac5bb42228ce6a41fec1bc558db8.svg",
+        "/public/assets/3a36fc404f440425e04925bd4bfcbf374b8b1e54.svg",
+        "/public/assets/1e530da6dc15e0d597de70e060d90eb15f0feb9e.svg",
+        "/public/assets/2f1e308a8fa6e732af7bf929ca977bda5ee311f4.svg",
+        "/public/assets/73f80ab40ccf422ecdab1b1e5af622ddf76f9451.svg",
+        "/public/assets/b73429d62abb742bf8ee805b878276a998a59135.svg",
+        "/public/assets/425da35ef91d82318e1bf0d2480775ad179f949c.svg",
+        "/public/assets/977b674c00a3a9ddbb1ba1873bfdfc4a2f7e283d.svg",
+        "/public/assets/f874fb8c4a03d7c1c99c586e2f61c411154bb783.svg",
+        "/public/assets/cbff7fe7801d5ea0255ad6f222f3d0824f79069b.svg",
+        "/public/assets/d302e7322b8deda9601552abd688146a094f5ae2.svg",
+        "/public/assets/002a18b8f2047f2fe258be1478007b88d3274654.svg",
+        "/public/assets/7ad7187d00371975974120ce650f92bc58dd31fb.svg"
+      ],
+      "componentCode": "saved_in_node-1-component.tsx",
+      "screenshotSaved": true,
+      "keyFeatures": [
+        "Purple gradient background (from #200535 to #5e0f9b)",
+        "Welcome to DDx header with AI logo",
+        "Revolutionize Diagnosis with AI hero section",
+        "Why Trust Our DDx section with 4 trust points",
+        "How it works section with 3 steps",
+        "Video thumbnail for 'How Differential Diagnosis Works'",
+        "Status bar with time 9:41",
+        "Hidden chat overlay (opacity 0)",
+        "Question cards for various medical specialties"
+      ]
+    },
+    {
+      "sequence": 2,
+      "nodeId": "1:29492",
+      "nodeName": "111",
+      "description": "DDx Scrolled State - Same screen as Node 1 but with scrollable content area showing full card content including extended 'How it works' section",
+      "timestamp": "2025-11-18T17:15:00Z",
+      "assets": [
+        "/public/assets/703ac4e5d1d1c24fe4d000c5f2489bfb188e9b1b.png",
+        "/public/assets/d1c6a60fbb2b193f096c2d24c0f540ef2bad7b38.png",
+        "/public/assets/abb2301ad16058fa8827c570fb498efa2288a073.png",
+        "/public/assets/71c0e1a4610258c12a4ec96bb1795b6d14c6147e.svg",
+        "/public/assets/4d1e1016154368a30841f10c1915c57964547fe2.svg",
+        "/public/assets/d52b8f244747ac5bb42228ce6a41fec1bc558db8.svg",
+        "/public/assets/3a36fc404f440425e04925bd4bfcbf374b8b1e54.svg",
+        "/public/assets/1e530da6dc15e0d597de70e060d90eb15f0feb9e.svg",
+        "/public/assets/2f1e308a8fa6e732af7bf929ca977bda5ee311f4.svg",
+        "/public/assets/73f80ab40ccf422ecdab1b1e5af622ddf76f9451.svg",
+        "/public/assets/b73429d62abb742bf8ee805b878276a998a59135.svg",
+        "/public/assets/425da35ef91d82318e1bf0d2480775ad179f949c.svg",
+        "/public/assets/977b674c00a3a9ddbb1ba1873bfdfc4a2f7e283d.svg",
+        "/public/assets/f874fb8c4a03d7c1c99c586e2f61c411154bb783.svg",
+        "/public/assets/cbff7fe7801d5ea0255ad6f222f3d0824f79069b.svg",
+        "/public/assets/d302e7322b8deda9601552abd688146a094f5ae2.svg",
+        "/public/assets/002a18b8f2047f2fe258be1478007b88d3274654.svg",
+        "/public/assets/7ad7187d00371975974120ce650f92bc58dd31fb.svg"
+      ],
+      "componentCode": "saved_in_node-2-component.tsx",
+      "screenshotSaved": true,
+      "keyFeatures": [
+        "Same purple gradient background as Node 1",
+        "Scrollable card content area (overflow-y-auto)",
+        "Card content height: 1483px (vs 662px in Node 1)",
+        "Shows complete 'How it works' section with all 3 steps",
+        "Video preview card visible",
+        "Sticky positioning for smooth scrolling UX",
+        "Interactive cursor pointer on scrollable area"
+      ],
+      "differences": [
+        "Node 1: Static view with limited content height (662px)",
+        "Node 2: Scrollable view with extended content (1483px)",
+        "Node 2 has overflow-y-auto on card content",
+        "Node 2 shows cursor-pointer indicating interactivity"
+      ]
+    },
+    {
+      "sequence": 3,
+      "nodeId": "unknown",
+      "nodeName": "Generate DDx - Gender Selection",
+      "description": "DDx Flow Start - Patient gender selection screen with Male/Female radio options",
+      "timestamp": "2025-11-18T17:18:00Z",
+      "assets": [],
+      "componentCode": "screenshot-only",
+      "screenshotSaved": true,
+      "keyFeatures": [
+        "White/light gray background",
+        "Header: 'Generate DDx' with back arrow and refresh icon",
+        "AI logo icon in purple",
+        "Prompt text: 'Let's get started! To begin, please select the Patient's Gender from the options below'",
+        "Section title: 'Select Patient's Gender'",
+        "Two radio button options: Male (selected with blue checkmark), Female",
+        "Male option has purple/blue border indicating selection",
+        "Clean, minimal UI design",
+        "Bottom navigation indicator bar"
+      ],
+      "notes": "Design context fetch failed - captured screenshot only. This is the first screen of the DDx generation flow after clicking from landing."
+    },
+    {
+      "sequence": 4,
+      "nodeId": "unknown",
+      "nodeName": "Generate DDx - Age Selection",
+      "description": "Patient age selection with scrollable number picker",
+      "timestamp": "2025-11-18T17:20:00Z",
+      "assets": [],
+      "componentCode": "screenshot-only",
+      "screenshotSaved": true,
+      "uiComponents": {
+        "header": "Generate DDx with back arrow and refresh icon",
+        "completedStep": {
+          "icon": "Purple edit icon",
+          "text": "Patient's Gender: Male",
+          "description": "Shows completed gender selection with edit capability"
+        },
+        "currentPrompt": {
+          "icon": "Purple AI logo",
+          "text": "Great! Please select the Patient's Age"
+        },
+        "agePicker": {
+          "type": "Scrollable vertical picker",
+          "visibleRange": "16-20 with 18 selected",
+          "selectedValue": "18",
+          "styling": "Purple/blue border on selected, hand cursor icon on 19",
+          "controls": "Up/down arrows for scrolling"
+        },
+        "actionButton": {
+          "text": "Select Age",
+          "color": "Blue/purple gradient",
+          "shape": "Rounded rectangle, full width"
+        }
+      },
+      "keyFeatures": [
+        "Shows progression: Gender completed → Age selection in progress",
+        "Edit icon on completed gender selection",
+        "Scrollable age picker with touch/drag indicator",
+        "Ages visible: 16, 17, 18 (selected), 19 (with hand cursor), 20",
+        "Blue gradient action button at bottom",
+        "Clean white card design",
+        "Bottom navigation indicator bar"
+      ],
+      "notes": "Screenshot only. Age picker component is interactive with scroll functionality."
+    },
+    {
+      "sequence": 5,
+      "nodeId": "unknown",
+      "nodeName": "Generate DDx - Symptoms Input",
+      "description": "Symptoms input screen with completed steps and example prompts",
+      "timestamp": "2025-11-18T17:21:00Z",
+      "assets": [],
+      "componentCode": "screenshot-only",
+      "screenshotSaved": true,
+      "uiComponents": {
+        "header": "Generate DDx with back arrow, refresh icon, and NEW: fullscreen/expand icon",
+        "completedSteps": [
+          {
+            "step": 1,
+            "icon": "Purple edit icon",
+            "text": "Patient's Gender: Male"
+          },
+          {
+            "step": 2,
+            "icon": "Purple edit icon",
+            "text": "Patient's Age: 18 years"
+          }
+        ],
+        "currentPrompt": {
+          "icon": "Purple AI logo",
+          "title": "Thank you! Now, please add the Symptoms",
+          "description": "along with any relevant details like the patient's history, past data, or clinical findings for better accuracy."
+        },
+        "examplePrompts": {
+          "title": "Try Examples Prompts",
+          "cards": [
+            {
+              "icon": "Purple sparkle/star icon",
+              "text": "Chest pain with shortness of breath at night"
+            },
+            {
+              "icon": "Purple sparkle/star icon",
+              "text": "Headache changes",
+              "note": "Partially visible"
+            }
+          ],
+          "styling": "White cards with purple icons"
+        },
+        "inputField": {
+          "placeholder": "Type your symptoms & more here",
+          "icon": "Plus (+) icon on left",
+          "micIcon": "Purple microphone icon on right",
+          "styling": "Large text area with rounded border"
+        }
+      },
+      "keyFeatures": [
+        "Shows 2 completed steps with edit capability",
+        "NEW: Fullscreen/expand icon in header",
+        "Example prompt cards for guidance",
+        "Multi-line text input for symptoms",
+        "Voice input option (mic icon)",
+        "Plus icon for adding details",
+        "Purple theme consistent throughout"
+      ],
+      "notes": "Screenshot only. This is the symptoms input screen - critical for DDx generation."
+    },
+    {
+      "sequence": 6,
+      "nodeId": "unknown",
+      "nodeName": "Generate DDx - Results Screen",
+      "description": "DDx results showing diagnosis list with tabs and document attachments",
+      "timestamp": "2025-11-18T17:22:00Z",
+      "assets": [],
+      "componentCode": "screenshot-only",
+      "screenshotSaved": true,
+      "uiComponents": {
+        "header": "Generate DDx with back arrow, refresh, and fullscreen icons",
+        "inputSummary": {
+          "text": "experienced 5 kg weight loss in one month, frequent dizziness (moderate) lasting minutes, and persistent fatigue (severe) for three months, affecting daily activities.",
+          "icon": "Purple edit icon",
+          "attachments": [
+            {
+              "type": "PDF",
+              "name": "Acct Statement 2...",
+              "icon": "Red PDF icon"
+            },
+            {
+              "type": "PDF",
+              "name": "BGV understand...",
+              "icon": "Red PDF icon"
+            }
+          ]
+        },
+        "warningNote": {
+          "background": "Light yellow/orange",
+          "text": "Note: To generate more accurate DDx results, refine your prompt by editing it.",
+          "styling": "Warning banner with orange text"
+        },
+        "resultsPrompt": {
+          "icon": "Purple AI logo",
+          "text": "Your DDx has been generated. Please find the results below.",
+          "shareIcon": "Blue share/export icon on right"
+        },
+        "tabNavigation": {
+          "tabs": ["Most Likely", "Expanded", "Can't Miss"],
+          "activeTab": "Most Likely",
+          "styling": "Green underline on active tab"
+        },
+        "diagnosisList": [
+          {
+            "name": "Congestive Heart Failure",
+            "icon": "Purple medical/diagnosis icon",
+            "label": "Most Likely Diagnosis",
+            "labelColor": "Red dashed underline",
+            "expandIcon": "Chevron down"
+          },
+          {
+            "name": "Pulmonary Embolism",
+            "icon": "Purple medical/diagnosis icon",
+            "label": "Most Likely Diagnosis",
+            "labelColor": "Red dashed underline",
+            "expandIcon": "Chevron down"
+          },
+          {
+            "name": "Anemia of Chronic Disease",
+            "icon": "Purple medical/diagnosis icon",
+            "label": "Most Likely Diagnosis",
+            "labelColor": "Red dashed underline",
+            "expandIcon": "Chevron down"
+          }
+        ],
+        "disclaimer": {
+          "text": "Disclaimer: These results are generated by AI and should be used as a guide, not the final source for patient treatment decisions.",
+          "styling": "Gray text at bottom"
+        }
+      },
+      "keyFeatures": [
+        "Shows entered symptoms summary",
+        "PDF document attachments (red icons)",
+        "Warning/note banner in yellow",
+        "Share/export functionality",
+        "3-tab navigation (Most Likely, Expanded, Can't Miss)",
+        "Expandable diagnosis cards",
+        "Purple medical icons for each diagnosis",
+        "Red dashed labels for 'Most Likely Diagnosis'",
+        "AI disclaimer at bottom"
+      ],
+      "notes": "Screenshot only. Main results screen with diagnosis list - key deliverable of DDx flow."
+    },
+    {
+      "sequence": 7,
+      "nodeId": "unknown",
+      "nodeName": "DDx History - List View",
+      "description": "History screen showing past DDx generations in chronological list",
+      "timestamp": "2025-11-18T17:23:00Z",
+      "assets": [],
+      "componentCode": "screenshot-only",
+      "screenshotSaved": true,
+      "uiComponents": {
+        "header": {
+          "closeIcon": "X close button (top left)",
+          "title": "DDx History"
+        },
+        "historyList": [
+          {
+            "timestamp": "Today, 1:30 pm",
+            "summary": "18 year old male reports intermittent chest pain (moderate) over two weeks, worsening with..."
+          },
+          {
+            "timestamp": "Today, 11:10 pm",
+            "summary": "26 year old male reports intermittent chest pain (moderate) over two weeks, worsening with..."
+          },
+          {
+            "timestamp": "31st Dec, 5:00 pm",
+            "summary": "26 year old male reports intermittent chest pain (moderate) over two weeks, worsening with..."
+          },
+          {
+            "timestamp": "31st Dec, 4:00 pm",
+            "summary": "26 year old male reports intermittent chest pain (moderate) over two weeks, worsening with..."
+          },
+          {
+            "timestamp": "30th Dec, 3:00 pm",
+            "summary": "26 year old male reports intermittent chest pain (moderate) over two weeks, worsening with..."
+          },
+          {
+            "timestamp": "30th Dec, 2:00 pm",
+            "summary": "26 year old male reports intermittent chest pain (moderate) over two weeks, worsening with..."
+          },
+          {
+            "timestamp": "30th Dec, 2:00 pm",
+            "summary": "26 year old male reports intermittent chest pain (moderate) over two weeks, worsening with..."
+          }
+        ],
+        "styling": {
+          "background": "White",
+          "itemDividers": "Light gray horizontal lines",
+          "timestampStyle": "Bold, darker text",
+          "summaryStyle": "Regular weight, gray text, truncated with ellipsis"
+        }
+      },
+      "keyFeatures": [
+        "Modal/overlay view with close button",
+        "Chronological list (newest first)",
+        "Timestamps grouped by day",
+        "Patient summaries truncated",
+        "Clean list design with dividers",
+        "Scrollable content",
+        "White background for readability"
+      ],
+      "notes": "Screenshot only. History modal showing past DDx searches - important for user to revisit past diagnoses."
+    }
+  ],
+  "lastUpdated": "2025-11-18T17:23:00Z",
+  "currentSequence": 8
+}
