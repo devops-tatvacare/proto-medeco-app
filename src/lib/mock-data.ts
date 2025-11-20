@@ -75,6 +75,20 @@ export const mockServices = [
       })
     ),
   },
+  {
+    id: "care-pathways",
+    title: "Care Pathways",
+    isSponsored: false,
+    icon: React.createElement(
+      "div",
+      { className: "w-16 h-16 rounded-2xl flex items-center justify-center overflow-hidden" },
+      React.createElement("img", {
+        src: "/assets/f261b47381c5b61d61e2d3a8624259376455cd2a.png",
+        alt: "Care Pathways",
+        className: "w-full h-full object-cover",
+      })
+    ),
+  },
 ];
 
 export const mockRewardCards = [

@@ -1,13 +1,21 @@
 "use client";
 
 import Image from 'next/image';
+import { usePathwayBuilder } from '@/context/PathwayBuilderContext';
 
-interface WelcomeMessageProps {
+interface PathwayWelcomeProps {
   onGetStarted: () => void;
   onBack?: () => void;
 }
 
-export function WelcomeMessage({ onGetStarted, onBack }: WelcomeMessageProps) {
+export function PathwayWelcome({ onGetStarted, onBack }: PathwayWelcomeProps) {
+  const { setStep } = usePathwayBuilder();
+
+  const handleGetStarted = () => {
+    setStep('basic-info');
+    onGetStarted();
+  };
+
   return (
     <div
       className="relative w-full h-full bg-gradient-to-b from-[#200535] to-[#5e0f9b] overflow-y-auto"
@@ -60,7 +68,7 @@ export function WelcomeMessage({ onGetStarted, onBack }: WelcomeMessageProps) {
               backgroundImage: 'linear-gradient(90deg, rgb(158, 173, 255) 0%, rgb(255, 128, 145) 100%)'
             }}
           >
-            Welcome to DDx
+            Create Care Pathway
           </h1>
         </div>
 
@@ -87,64 +95,64 @@ export function WelcomeMessage({ onGetStarted, onBack }: WelcomeMessageProps) {
                   backgroundImage: 'linear-gradient(90deg, rgb(78, 73, 226) 0%, rgb(124, 45, 239) 31.488%, rgb(182, 9, 255) 70.76%)'
                 }}
               >
-                Revolutionize
+                Build Standardized
                 <br />
-                Diagnosis with AI
+                Care Protocols
               </h2>
               <p className="text-[#454551] text-[16px] leading-[24px] mt-4">
-                Unlock AI-powered precision to identify differential diagnoses. Enter patient data, let the AI analyze, and gain clear insights to enhance your clinical decisions.
+                Create evidence-based care pathways with structured assessments, interventions, and monitoring plans to deliver consistent, high-quality patient care.
               </p>
             </div>
 
-            {/* Why Trust Our DDx Section */}
+            {/* Why Create Pathways Section */}
             <div className="bg-[#fefdff] rounded-tl-[32px] rounded-tr-[32px] p-6 mb-8 relative overflow-visible min-h-[320px]">
               <h3 className="text-[24px] font-semibold text-[#1f2933] mb-6">
-                Why Trust Our DDx?
+                Why Build Pathways?
               </h3>
 
               <div className="space-y-6 relative z-10 max-w-[190px]">
-                {/* Trust Point 1 */}
+                {/* Point 1 */}
                 <div className="flex items-center gap-3 bg-gradient-to-r from-[rgba(223,205,253,0.4)] to-[rgba(255,255,255,0)] rounded-[24px] px-3 py-2">
                   <div className="w-6 h-6 flex-shrink-0">
                     <Image src="/assets/73f80ab40ccf422ecdab1b1e5af622ddf76f9451.svg" alt="" width={24} height={24} />
                   </div>
                   <p className="text-[14px] text-[#454551] opacity-80">
-                    Powered by evidence-based AI algorithms.
+                    Standardize clinical workflows
                   </p>
                 </div>
 
-                {/* Trust Point 2 */}
+                {/* Point 2 */}
                 <div className="flex items-center gap-3 bg-gradient-to-r from-[rgba(223,205,253,0.4)] to-[rgba(255,255,255,0)] rounded-[24px] px-3 py-2">
                   <div className="w-6 h-6 flex-shrink-0">
                     <Image src="/assets/b73429d62abb742bf8ee805b878276a998a59135.svg" alt="" width={24} height={24} />
                   </div>
                   <p className="text-[14px] text-[#454551] opacity-80">
-                    Validated by<br />healthcare experts.
+                    Improve patient<br />outcomes
                   </p>
                 </div>
 
-                {/* Trust Point 3 */}
+                {/* Point 3 */}
                 <div className="flex items-center gap-3 bg-gradient-to-r from-[rgba(223,205,253,0.4)] to-[rgba(255,255,255,0)] rounded-[24px] px-3 py-2">
                   <div className="w-6 h-6 flex-shrink-0">
                     <Image src="/assets/425da35ef91d82318e1bf0d2480775ad179f949c.svg" alt="" width={24} height={24} />
                   </div>
                   <p className="text-[14px] text-[#454551] opacity-80">
-                    HIPAA & GDPR Compliant
+                    Reduce clinical variability
                   </p>
                 </div>
 
-                {/* Trust Point 4 */}
+                {/* Point 4 */}
                 <div className="flex items-center gap-3 bg-gradient-to-r from-[rgba(223,205,253,0.4)] to-[rgba(255,255,255,0)] rounded-[24px] px-3 py-2">
                   <div className="w-6 h-6 flex-shrink-0">
                     <Image src="/assets/977b674c00a3a9ddbb1ba1873bfdfc4a2f7e283d.svg" alt="" width={24} height={24} />
                   </div>
                   <p className="text-[14px] text-[#454551] opacity-80">
-                    Backed by<br />Clinical Studies
+                    Evidence-based<br />guidelines
                   </p>
                 </div>
               </div>
 
-              {/* Doctor Image - Positioned at bottom right INSIDE the card */}
+              {/* Doctor Image */}
               <div className="absolute bottom-0 right-0 w-[160px] h-[280px]">
                 <Image
                   src="/assets/d1c6a60fbb2b193f096c2d24c0f540ef2bad7b38.png"
@@ -168,7 +176,7 @@ export function WelcomeMessage({ onGetStarted, onBack }: WelcomeMessageProps) {
                     <span className="text-white text-[23.459px] font-extrabold">1</span>
                   </div>
                   <p className="text-[16px] text-[#213053] opacity-80 pt-2">
-                    Provide patient details such as <strong>age</strong> and <strong>gender</strong>.
+                    Enter pathway <strong>name</strong>, <strong>specialty</strong>, and <strong>description</strong>
                   </p>
                 </div>
 
@@ -178,7 +186,7 @@ export function WelcomeMessage({ onGetStarted, onBack }: WelcomeMessageProps) {
                     <span className="text-white text-[23.459px] font-extrabold">2</span>
                   </div>
                   <p className="text-[16px] text-[#213053] opacity-80 pt-2">
-                    Enter <strong>symptoms</strong> (mandatory) and any additional relevant patients details
+                    Define <strong>assessments</strong>, <strong>risk levels</strong>, and <strong>interventions</strong>
                   </p>
                 </div>
 
@@ -188,7 +196,7 @@ export function WelcomeMessage({ onGetStarted, onBack }: WelcomeMessageProps) {
                     <span className="text-white text-[23.459px] font-extrabold">3</span>
                   </div>
                   <p className="text-[16px] text-[#213053] opacity-80 pt-2">
-                    Let the AI generate a comprehensive list of differential diagnoses
+                    Set up <strong>monitoring schedules</strong> and save your pathway
                   </p>
                 </div>
               </div>
@@ -196,8 +204,8 @@ export function WelcomeMessage({ onGetStarted, onBack }: WelcomeMessageProps) {
 
             {/* Get Started Button */}
             <button
-              onClick={onGetStarted}
-              className="w-full py-3.5 px-6 rounded-full text-white font-medium text-base shadow-lg transition-all hover:shadow-xl"
+              onClick={handleGetStarted}
+              className="w-full py-3.5 px-6 rounded-full text-white font-medium text-base shadow-lg transition-all hover:shadow-xl mb-8"
               style={{
                 background: 'linear-gradient(to right, #4b4ad5, #a461d8)',
                 border: '1px solid white'
@@ -205,6 +213,9 @@ export function WelcomeMessage({ onGetStarted, onBack }: WelcomeMessageProps) {
             >
               Get Started
             </button>
+
+            {/* Spacer for bottom padding */}
+            <div className="h-6"></div>
           </div>
         </div>
       </div>

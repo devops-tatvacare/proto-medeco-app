@@ -17,7 +17,7 @@ const manrope = Manrope({
 });
 
 export const metadata: Metadata = {
-  title: "Dr.Tatva HCP App",
+  title: "Medeco App",
   description: "Healthcare Professional Platform - Prototype from Figma",
 };
 

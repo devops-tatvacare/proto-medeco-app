@@ -1,6 +1,5 @@
 "use client";
 
-import { useRouter } from 'next/navigation';
 import Image from 'next/image';
 import { Diagnosis } from '@/context/DDxContext';
 import { DiagnosisCard } from './DiagnosisCard';
@@ -11,6 +10,8 @@ interface ResultsMessageProps {
   diagnoses: Diagnosis[];
   onToggleDiagnosis: (id: string) => void;
   onEditSymptoms: () => void;
+  onViewCarePathway?: (diagnosisId: string, diagnosisName: string, mode: 'view' | 'create') => void;
+  showCarePathwayButtons?: boolean;
 }
 
 export function ResultsMessage({
@@ -18,16 +19,10 @@ export function ResultsMessage({
   files,
   diagnoses,
   onToggleDiagnosis,
-  onEditSymptoms
+  onEditSymptoms,
+  onViewCarePathway,
+  showCarePathwayButtons = true
 }: ResultsMessageProps) {
-  const router = useRouter();
-
-  const handleViewCarePathway = (diagnosisId: string) => {
-    const diagnosis = diagnoses.find(d => d.id === diagnosisId);
-    if (diagnosis) {
-      router.push(`/care-pathway?diagnosisId=${diagnosisId}&diagnosisName=${encodeURIComponent(diagnosis.name)}`);
-    }
-  };
 
   return (
     <div className="px-4 py-4 space-y-4">
@@ -97,17 +92,16 @@ export function ResultsMessage({
 
       {/* Most Likely Section */}
       <div>
-        <h3 className="text-base font-semibold text-[#171725] mb-3 px-1">
-          Most Likely
-        </h3>
-
-        <div className="space-y-3">
-          {diagnoses.map(diagnosis => (
+        <div className="shadow-sm">
+          {diagnoses.map((diagnosis, index) => (
             <DiagnosisCard
               key={diagnosis.id}
               diagnosis={diagnosis}
               onToggle={() => onToggleDiagnosis(diagnosis.id)}
-              onViewCarePathway={handleViewCarePathway}
+              onViewCarePathway={onViewCarePathway}
+              showCarePathwayButton={showCarePathwayButtons}
+              isFirst={index === 0}
+              isLast={index === diagnoses.length - 1}
             />
           ))}
         </div>
