@@ -89,6 +89,20 @@ export const mockServices = [
       })
     ),
   },
+  {
+    id: "remote-care",
+    title: "Remote Care",
+    isSponsored: false,
+    icon: React.createElement(
+      "div",
+      { className: "w-16 h-16 rounded-2xl flex items-center justify-center overflow-hidden" },
+      React.createElement("img", {
+        src: "/assets/5daee33910f157a803313624fd6cff57722045a4.svg",
+        alt: "Remote Care",
+        className: "w-full h-full object-contain bg-[#f5f4ff]",
+      })
+    ),
+  },
 ];
 
 export const mockRewardCards = [

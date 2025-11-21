@@ -10,7 +10,7 @@ export default function PathwayViewPage() {
   const pathwayId = params.id as string;
 
   const handleBackClick = () => {
-    router.back();
+    router.push('/care-pathways?tab=create');
   };
 
   return (

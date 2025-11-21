@@ -22,7 +22,7 @@ export function PathwayBuilderReview() {
 
   const handleSave = () => {
     savePathway();
-    router.push('/care-pathways');
+    router.push('/care-pathways?tab=create');
   };
 
   return (

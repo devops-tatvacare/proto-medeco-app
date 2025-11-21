@@ -22,7 +22,9 @@ export default function Home() {
     } else if (serviceId === "ddx") {
       router.push("/ddx");
     } else if (serviceId === "care-pathways") {
-      router.push("/care-pathways");
+      router.push("/care-pathways?tab=overview");
+    } else if (serviceId === "remote-care") {
+      router.push("/remote-care");
     }
   };
   return (
@@ -81,7 +83,7 @@ export default function Home() {
 
       {/* Remote Care Banner */}
       <RemoteCareBanner
-        onCtaClick={() => console.log("Remote Care clicked")}
+        onCtaClick={() => router.push("/remote-care")}
       />
 
       {/* Services Section */}

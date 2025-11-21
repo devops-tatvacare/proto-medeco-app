@@ -31,7 +31,7 @@ function PathwayBuilderContent() {
 
   const handleBack = () => {
     if (step === 'welcome') {
-      router.back();
+      router.push('/care-pathways?tab=create');
     } else {
       resetToWelcome();
     }

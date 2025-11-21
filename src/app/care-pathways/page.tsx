@@ -1,7 +1,6 @@
 "use client";
 
-import { useState } from 'react';
-import { useRouter } from 'next/navigation';
+import { useRouter, useSearchParams } from 'next/navigation';
 import { MobileFrame } from '@/components/MobileFrame';
 import { CarePathwaysTabBar } from '@/components/CarePathwaysTabBar';
 import { CarePathwaysOverview } from '@/components/care-pathways/CarePathwaysOverview';
@@ -10,14 +9,18 @@ import { CarePathwaysTemplates } from '@/components/care-pathways/CarePathwaysTe
 
 export default function CarePathwaysPage() {
   const router = useRouter();
-  const [activeTab, setActiveTab] = useState<'overview' | 'create' | 'templates'>('overview');
+  const searchParams = useSearchParams();
+
+  const tabParam = searchParams.get('tab');
+  const activeTab: 'overview' | 'create' | 'templates' =
+    tabParam === 'create' || tabParam === 'templates' ? tabParam : 'overview';
 
   const handleBackClick = () => {
-    router.back();
+    router.push('/');
   };
 
   const handleTabChange = (tab: "overview" | "create" | "templates") => {
-    setActiveTab(tab);
+    router.push(`/care-pathways?tab=${tab}`);
   };
 
   return (
